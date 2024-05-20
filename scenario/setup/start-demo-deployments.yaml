@@ -1,0 +1,10 @@
+---
+apiVersion: xl-release/v1
+kind: Release
+metadata:
+  home: Application Demo
+spec:
+  name: Deploy TestApp 1.0
+  template: TestApp Deploy Pipeline
+  variables:
+    version: '1.0'

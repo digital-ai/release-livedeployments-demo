@@ -1,0 +1,8 @@
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+  - type: xlrelease.ThemeSettings
+    id: Configuration/settings/ThemeSettings
+    headerName: Release & Deploy Together
+    headerAccentColor: !source color.txt
+    description: Instance for testing Release and Deploy together
