@@ -3,7 +3,6 @@ kind: Import
 metadata:
   imports:
   - deploy-setup.yaml
-  - release-application-demo.yaml
-  - release-remote-runner.yaml
+  - release-setup.yaml
   - start-demo-deployments.yaml
 

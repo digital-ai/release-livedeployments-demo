@@ -7,6 +7,7 @@ services:
     - 4516:4516
     environment:
     - ADMIN_PASSWORD=admin
+    - ACCEPT_EULA=Y
 
   release:
 #    build: docker/xl-release
@@ -17,50 +18,17 @@ services:
     - ADMIN_PASSWORD=admin
     - ACCEPT_EULA=Y
 
-  xl-cli:
-    build: ./docker/xl-cli
-    command: ["apply", "-v", "-f", "/data/configure-xl-devops-platform.yaml"]
-    volumes:
-    - ./docker/as-code:/data:ro
-
-  dockerproxy:
-    image: tecnativa/docker-socket-proxy:latest
-    privileged: true
-    volumes:
-      - '/var/run/docker.sock:/var/run/docker.sock'
-    environment: # warning this potentially opens up a security hole :)
-      - AUTH=1
-      - BUILD=1
-      - COMMIT=1
-      - CONTAINERS=1
-      - EVENTS=1
-      - EXEC=1
-      - IMAGES=1
-      - INFO=1
-      - NETWORKS=1
-      - NODES=1
-      - PING=1
-      - PLUGINS=1
-      - POST=1
-      - SECRETS=1
-      - SERVICES=1
-      - SWARM=1
-      - SYSTEM=1
-      - TASKS=1
-      - VERSION=1
-      - VOLUMES=1
-
   setup:
-    build: ./scenario/setup
+    build: demo-scenario
     depends_on:
       - deploy
       - release
-    command: ["apply", "-v", "-f", "/data/setup.yaml"]
+    command: ["apply", "--verbose", "--detach", "--file", "/data/setup.yaml"]
     volumes:
-      - ./scenario/setup:/data:ro
+      - ./demo-scenario:/data:ro
 
   remote-runner:
-    build: ./scenario/remote-runner
+    build: docker/remote-runner
     depends_on:
       - setup
     environment:

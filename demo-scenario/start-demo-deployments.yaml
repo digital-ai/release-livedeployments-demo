@@ -1,4 +1,3 @@
----
 apiVersion: xl-release/v1
 kind: Release
 metadata:
