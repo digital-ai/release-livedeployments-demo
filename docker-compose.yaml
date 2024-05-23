@@ -1,8 +1,8 @@
 version: '2.3'
 services:
   deploy:
-    build: docker/xl-deploy
-#    build: docker/xl-deploy-from-zip
+#    build: docker/xl-deploy
+    build: docker/xl-deploy-from-zip
     ports:
     - 4516:4516
     environment:

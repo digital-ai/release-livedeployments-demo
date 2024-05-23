@@ -1,0 +1,8 @@
+xl:
+  repository:
+    database:
+      db-driver-classname: "org.apache.derby.iapi.jdbc.AutoloadedDriver"
+      db-url: "jdbc:derby:repository/db;create=true"
+      db-username: ""
+      db-password: ""
+    artifacts.root: "build/artifacts"
