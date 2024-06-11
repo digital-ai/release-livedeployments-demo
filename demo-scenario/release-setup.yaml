@@ -156,7 +156,7 @@ spec:
   authentication:
     type: events.NoAuthentication
 - name: Deploy Config
-  type: digitalai.DeployDeployment
+  type: deploy.DeploymentConfig
   targetServer: Deploy (through Remote Runner)
   application: .*
   environment: .*
