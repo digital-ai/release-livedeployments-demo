@@ -6,11 +6,6 @@ spec:
     headerName: Release & Deploy Together
     headerAccentColor: RED
     description: Instance for testing Release and Deploy together
-  - name: Deploy (direct)
-    type: xldeploy.XLDeployServer
-    url: http://deploy:4516
-    username: admin
-    password: admin
 
 ---
 apiVersion: xl-release/v1
@@ -52,7 +47,7 @@ kind: Templates
 metadata:
   home: Application Demo
 spec:
-- name: Deploy (through Remote Runner) # Needs to be on folder level for app to show up in 'Application management'
+- name: Deploy (through runner) # Needs to be on folder level for app to show up in 'Application management'
   type: digitalai.DeployServer
   url: http://localhost:4516
   username: admin
@@ -66,8 +61,8 @@ spec:
       team: Release Admin
       precondition: "${confirmDeployment}"
     - name: Deploy to DEV
-      type: xldeploy.Deploy
-      server: Deploy (direct)
+      type: deploy.Deploy
+      server: Deploy (through runner)
       deploymentApplication: Applications/Users/Hes/TestApp
       deploymentVersion: "${version}"
       deploymentPackage: "Applications/Users/Hes/TestApp/${version}"
@@ -85,8 +80,8 @@ spec:
       team: Release Admin
       precondition: "${confirmDeployment}"
     - name: Deploy to TEST
-      type: xldeploy.Deploy
-      server: Deploy (direct)
+      type: deploy.Deploy
+      server: Deploy (through runner)
       deploymentApplication: Applications/Users/Hes/TestApp
       deploymentVersion: "1.0"
       deploymentPackage: Applications/Users/Hes/TestApp/1.0
@@ -104,8 +99,8 @@ spec:
       team: Release Admin
       precondition: "${confirmDeployment}"
     - name: Deploy to ACC
-      type: xldeploy.Deploy
-      server: Deploy (direct)
+      type: deploy.Deploy
+      server: Deploy (through runner)
       deploymentApplication: Applications/Users/Hes/TestApp
       deploymentVersion: "1.0"
       deploymentPackage: Applications/Users/Hes/TestApp/1.0
@@ -123,8 +118,8 @@ spec:
       team: Release Admin
       precondition: "${confirmDeployment}"
     - name: Deploy to PROD
-      type: xldeploy.Deploy
-      server: Deploy (direct)
+      type: deploy.Deploy
+      server: Deploy (through runner)
       deploymentApplication: Applications/Users/Hes/TestApp
       deploymentVersion: "1.0"
       deploymentPackage: Applications/Users/Hes/TestApp/1.0
@@ -157,7 +152,7 @@ spec:
     type: events.NoAuthentication
 - name: Deploy Config
   type: deploy.DeploymentConfig
-  targetServer: Deploy (through Remote Runner)
+  targetServer: Deploy (through runner)
   application: .*
   environment: .*
 - name: Deploy Status Webhook Event Source

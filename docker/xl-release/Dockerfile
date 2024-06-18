@@ -1,5 +1,4 @@
-# Offical
-FROM xebialabs/xl-release:24.1
+FROM xebialabsunsupported/xl-release:24.3
 
 # Install license
-COPY default-conf/xl-release-license.lic /opt/xebialabs/xl-release-server/default-conf/
+ADD default-conf /opt/xebialabs/xl-release-server/default-conf

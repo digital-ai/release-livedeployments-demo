@@ -1,3 +1,4 @@
-FROM xebialabs/xl-deploy:23.3
+FROM xebialabsunsupported/xl-deploy:24.3
 
-COPY default-conf/* /opt/xebialabs/xl-deploy-server/default-conf/
+# Install license
+ADD default-conf /opt/xebialabs/xl-release-server/default-conf

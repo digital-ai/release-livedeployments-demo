@@ -1,8 +1,8 @@
 version: '2.3'
 services:
   deploy:
-#    build: docker/xl-deploy
-    build: docker/xl-deploy-from-zip
+    build: docker/xl-deploy
+#    build: docker/xl-deploy-from-zip
     ports:
     - 4516:4516
     environment:
@@ -10,8 +10,8 @@ services:
     - ACCEPT_EULA=Y
 
   release:
-#    build: docker/xl-release
-    build: docker/xl-release-from-zip
+    build: docker/xl-release
+#    build: docker/xl-release-from-zip
     ports:
     - 5516:5516
     environment:
