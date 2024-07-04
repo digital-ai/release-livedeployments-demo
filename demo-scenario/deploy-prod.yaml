@@ -1,0 +1,24 @@
+apiVersion: xl-release/v1
+kind: Templates
+metadata:
+  home: Application Demo
+spec:
+  - name: Deploy PROD Server Connection
+    type: digitalai.DeployServer
+    url: https://xl-deploy.xebialabs.com/
+    username: admin
+    password: admin
+  - name: Deploy PROD Webhook
+    type: events.PostWebhookEndpoint
+    path: deploy-prod
+    authentication:
+      type: events.NoAuthentication
+  - name: Deploy PROD Config
+    type: deploy.DeploymentConfig
+    targetServer: Deploy PROD Server Connection
+    application: .*
+    environment: .*
+  - name: Deploy PROD Status Webhook Event Source
+    type: deploy.StatusWebhookEventSource
+    eventSource: Deploy PROD Webhook
+    config: Deploy PROD Config

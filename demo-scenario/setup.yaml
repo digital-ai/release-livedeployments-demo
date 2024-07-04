@@ -5,4 +5,6 @@ metadata:
   - deploy-setup.yaml
   - release-setup.yaml
   - start-demo-deployments.yaml
-
+#  - deploy-nightly.yaml
+#  - deploy-prod.yaml
+#  - argocd-deployments.yaml
