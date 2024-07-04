@@ -1,0 +1,24 @@
+apiVersion: xl-release/v1
+kind: Templates
+metadata:
+  home: Application Demo
+spec:
+  - name: ArgoCD Deployments Connection
+    type: argocd.APIServer
+    url: https://argocd.usw2mgt.dev.digitalai.cloud/
+    username: admin
+    password: admin
+  - name: ArgoCD Deployments Webhook
+    type: events.PostWebhookEndpoint
+    path: argocd-deployments
+    authentication:
+      type: events.NoAuthentication
+  - name: ArgoCD Deployments Config
+    type: argocd.DeploymentConfig
+    targetServer: ArgoCD Deployments Connection
+    application: .*
+    environment: .*
+  - name: ArgoCD Deployments Status Webhook Event Source
+    type: argocd.StatusWebhookEventSource
+    eventSource: ArgoCD Deployments Webhook
+    config: ArgoCD Deployments Config
