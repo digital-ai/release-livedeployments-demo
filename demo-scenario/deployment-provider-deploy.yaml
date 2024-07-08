@@ -1,0 +1,29 @@
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+  - name: Deploy Server Connection
+    type: digitalai.DeployServer
+    url: !value deployUrl
+    username: !value deployUsername
+    password: !value deployPassword
+
+---
+apiVersion: xl-release/v1
+kind: Templates
+metadata:
+  home: Application Demo
+spec:
+  - name: Deploy Webhook
+    type: events.PostWebhookEndpoint
+    path: deploy
+    authentication:
+      type: events.NoAuthentication
+  - name: Deploy Config
+    type: deploy.DeploymentConfig
+    targetServer: Deploy Server Connection
+    application: .*
+    environment: .*
+  - name: Deploy Status Webhook Event Source
+    type: deploy.StatusWebhookEventSource
+    eventSource: Deploy Webhook
+    config: Deploy Config

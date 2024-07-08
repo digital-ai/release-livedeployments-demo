@@ -14,6 +14,7 @@ RUN chmod 777 /.xebialabs
 USER 10001
 VOLUME "/data"
 
+COPY secrets.xlvals /.xebialabs/secrets.xlvals
 COPY config.yaml /.xebialabs/config.yaml
 RUN xl version
 
