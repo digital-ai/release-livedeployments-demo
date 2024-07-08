@@ -54,7 +54,7 @@ kind: Configuration
 spec:
   - name: Configuration/Deploy
     type: webhook.WebhookServer
-    webhookServerURL: http://release:5516/webhooks/path-50bdf76c-36a7-4e44-b494-e4032a19c1eb
+    webhookServerURL: http://release:5516/webhooks/deploy
     noAuthentication: true
     application: .*
     environment: .*
