@@ -2,11 +2,14 @@
 
 This repository contains demo for Digital.ai Release and Deploy live deployments.
 
+⚠️** Currently broken **⚠️
+
+* Docker setup pulls nightly build of Digital.ai Release, but the bundled version of the `release-deploy-integration` plugin is not compatible with the Live Deployments feature.
+* To resolve this problem, make sure nightly build bundles latest version of the plugin.
+
 ## Perequisites
 
-* Docker
-* Release license. Store it in  [docker/xl-release-from-zip/xl-release-license.lic](docker/xl-release-from-zip/xl-release-license.lic)
-* Pre-built xl-release zip from branch. Ask Mario team. Put this zip file in [docker/xl-release-from-zip](docker/xl-release-from-zip). 
+* Docker 
 
 ## Start & stop
 
