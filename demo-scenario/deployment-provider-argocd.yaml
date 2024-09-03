@@ -3,9 +3,9 @@ kind: Templates
 spec:
   - name: ArgoCD Server Connection
     type: argocd.APIServer
-    url: !value argoCdUrl
-    username: !value argoCdUsername
-    password: !value argoCdPassword
+    url: https://ec2-18-216-146-10.us-east-2.compute.amazonaws.com:30735
+    username: admin
+    password: WPJd-OLc0mdZg62U
 
 ---
 apiVersion: xl-release/v1
@@ -13,17 +13,17 @@ kind: Templates
 metadata:
   home: Application Demo
 spec:
-  - name: ArgoCD Deployments Webhook
+  - name: ArgoCD Webhook Endpoint
     type: events.PostWebhookEndpoint
     path: argocd
     authentication:
       type: events.NoAuthentication
-  - name: ArgoCD Deployments Config
+  - name: ArgoCD Deployment Config
     type: argocd.DeploymentConfig
-    targetServer: ArgoCD Server Connection
     application: .*
-    environment: .*
-  - name: ArgoCD Deployments Status Webhook Event Source
-    type: argocd.StatusWebhookEventSource
-    eventSource: ArgoCD Deployments Webhook
-    config: ArgoCD Deployments Config
+  - name: ArgoCD Status Webhook Event Source
+    type: argo.StatusWebhookEventSource
+    sourceServer: ArgoCD Server Connection
+    eventSource: ArgoCD Webhook Endpoint
+    liveDeploymentConfigs:
+    - ArgoCD Deployment Config

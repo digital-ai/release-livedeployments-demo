@@ -13,17 +13,18 @@ kind: Templates
 metadata:
   home: Application Demo
 spec:
-  - name: Deploy Webhook
+  - name: Deploy Webhook Endpoint
     type: events.PostWebhookEndpoint
     path: deploy
     authentication:
       type: events.NoAuthentication
-  - name: Deploy Config
+  - name: Deploy Deployment Config
     type: deploy.DeploymentConfig
-    targetServer: Deploy Server Connection
     application: .*
     environment: .*
   - name: Deploy Status Webhook Event Source
     type: deploy.StatusWebhookEventSource
-    eventSource: Deploy Webhook
-    config: Deploy Config
+    sourceServer: Deploy Server Connection
+    eventSource: Deploy Webhook Endpoint
+    liveDeploymentConfigs:
+    - Deploy Deployment Config

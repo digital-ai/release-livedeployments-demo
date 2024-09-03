@@ -48,14 +48,4 @@ spec:
         type: udm.Environment
       - name: TEST
         type: udm.Environment
----
-apiVersion: xl-deploy/v1
-kind: Configuration
-spec:
-  - name: Configuration/Deploy
-    type: webhook.WebhookServer
-    webhookServerURL: http://release:5516/webhooks/deploy
-    noAuthentication: true
-    application: .*
-    environment: .*
 
