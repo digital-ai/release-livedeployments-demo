@@ -4,8 +4,8 @@ spec:
   - name: ArgoCD Server Connection
     type: argocd.APIServer
     url: https://ec2-18-216-146-10.us-east-2.compute.amazonaws.com:30735
-    username: admin
-    password: WPJd-OLc0mdZg62U
+    username: !value argoCdUsername
+    password: !value argoCdPassword
 
 ---
 apiVersion: xl-release/v1

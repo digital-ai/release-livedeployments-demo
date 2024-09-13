@@ -1,11 +1,11 @@
 apiVersion: xl-release/v1
 kind: Templates
 spec:
-  - name: Deploy Server Connection
+  - name: Local Deploy (Docker)
     type: digitalai.DeployServer
-    url: !value deployUrl
-    username: !value deployUsername
-    password: !value deployPassword
+    url: http://host.docker.internal:4516
+    username: admin
+    password: admin
 
 ---
 apiVersion: xl-release/v1
@@ -24,7 +24,7 @@ spec:
     environment: .*
   - name: Deploy Status Webhook Event Source
     type: deploy.StatusWebhookEventSource
-    sourceServer: Deploy Server Connection
+    sourceServer: Local Deploy (Docker)
     eventSource: Deploy Webhook Endpoint
     liveDeploymentConfigs:
     - Deploy Deployment Config
