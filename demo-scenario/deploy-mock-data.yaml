@@ -1,21 +1,4 @@
 apiVersion: xl-deploy/v1
-kind: Infrastructure
-spec:
-  - name: local-docker
-    type: docker.Engine
-    dockerHost: http://dockerproxy:2375
-
----
-apiVersion: xl-deploy/v1
-kind: Environments
-spec:
-  - name: Local Docker Engine
-    type: udm.Environment
-    members:
-      - Infrastructure/local-docker
-
----
-apiVersion: xl-deploy/v1
 kind: Applications
 spec:
   - directory: Applications/Users
@@ -48,14 +31,3 @@ spec:
         type: udm.Environment
       - name: TEST
         type: udm.Environment
----
-apiVersion: xl-deploy/v1
-kind: Configuration
-spec:
-  - name: Configuration/Deploy
-    type: webhook.WebhookServer
-    webhookServerURL: http://release:5516/webhooks/path-50bdf76c-36a7-4e44-b494-e4032a19c1eb
-    noAuthentication: true
-    application: .*
-    environment: .*
-

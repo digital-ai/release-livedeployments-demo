@@ -1,4 +1,4 @@
-FROM xebialabsunsupported/release-runner:24.1.2-rc.1
+FROM xebialabsunsupported/release-runner:24.3.0-beta.6
 
 USER root
 

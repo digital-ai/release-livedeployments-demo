@@ -34,7 +34,7 @@ services:
     environment:
       - RELEASE_RUNNER_RELEASE_URL=http://localhost:5516
       - PROJECT_NAME=release-remote-runner
-      - VERSION=23.3.0
+      - VERSION=24.1.6
     network_mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
