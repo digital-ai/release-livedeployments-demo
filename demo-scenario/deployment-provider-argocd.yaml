@@ -3,7 +3,7 @@ kind: Templates
 spec:
   - name: ArgoCD Server Connection
     type: argocd.APIServer
-    url: https://ec2-18-216-146-10.us-east-2.compute.amazonaws.com:30735
+    url: !value argoCdUrl
     username: !value argoCdUsername
     password: !value argoCdPassword
 

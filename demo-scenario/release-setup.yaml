@@ -6,52 +6,12 @@ spec:
     headerName: Release & Deploy Together
     headerAccentColor: RED
     description: Instance for testing Release and Deploy together
-
----
-apiVersion: xl-release/v1
-kind: Environments
-spec:
-  stages:
-    - Test
-    - Acceptance
-    - Development
-    - Production
-  labels:
-    - name: TestApp
-      color: '#3d6c9e'
-  environments:
-    - name: PROD
-      stage: Production
-      labels:
-        - TestApp
-    - name: DEV
-      stage: Development
-      labels:
-        - TestApp
-    - name: ACC
-      stage: Acceptance
-      labels:
-        - TestApp
-    - name: TEST
-      stage: Test
-      labels:
-        - TestApp
----
-apiVersion: xl-release/v1
-kind: Applications
-spec:
-  - name: TestApp
 ---
 apiVersion: xl-release/v1
 kind: Templates
 metadata:
   home: Application Demo
 spec:
-- name: Deploy (through runner) # Needs to be on folder level for app to show up in 'Application management'
-  type: digitalai.DeployServer
-  url: http://localhost:4516
-  username: admin
-  password: admin
 - template: TestApp Deploy Pipeline
   phases:
   - phase: DEV
@@ -62,7 +22,7 @@ spec:
       precondition: "${confirmDeployment}"
     - name: Deploy to DEV
       type: deploy.Deploy
-      server: Deploy (through runner)
+      server: Local Deploy (Docker)
       deploymentApplication: Applications/Users/Hes/TestApp
       deploymentVersion: "${version}"
       deploymentPackage: "Applications/Users/Hes/TestApp/${version}"
@@ -81,7 +41,7 @@ spec:
       precondition: "${confirmDeployment}"
     - name: Deploy to TEST
       type: deploy.Deploy
-      server: Deploy (through runner)
+      server: Local Deploy (Docker)
       deploymentApplication: Applications/Users/Hes/TestApp
       deploymentVersion: "1.0"
       deploymentPackage: Applications/Users/Hes/TestApp/1.0
@@ -100,7 +60,7 @@ spec:
       precondition: "${confirmDeployment}"
     - name: Deploy to ACC
       type: deploy.Deploy
-      server: Deploy (through runner)
+      server: Local Deploy (Docker)
       deploymentApplication: Applications/Users/Hes/TestApp
       deploymentVersion: "1.0"
       deploymentPackage: Applications/Users/Hes/TestApp/1.0
@@ -119,7 +79,7 @@ spec:
       precondition: "${confirmDeployment}"
     - name: Deploy to PROD
       type: deploy.Deploy
-      server: Deploy (through runner)
+      server: Local Deploy (Docker)
       deploymentApplication: Applications/Users/Hes/TestApp
       deploymentVersion: "1.0"
       deploymentPackage: Applications/Users/Hes/TestApp/1.0
@@ -143,304 +103,3 @@ spec:
   riskProfile: Default risk profile
   author: hes.siemelink@digital.ai
   defaultTargetFolder: ./
-
-# Webhook from Deploy
-- name: Deploy Webhook
-  type: events.PostWebhookEndpoint
-  path: path-50bdf76c-36a7-4e44-b494-e4032a19c1eb
-  authentication:
-    type: events.NoAuthentication
-- name: Deploy Config
-  type: deploy.DeploymentConfig
-  targetServer: Deploy (through runner)
-  application: .*
-  environment: .*
-- name: Deploy Status Webhook Event Source
-  type: deploy.StatusWebhookEventSource
-  eventSource: Deploy Webhook
-  config: Deploy Config
-
-# Dashboard
-- name: TestApp Deployments
-  type: xlrelease.DeploymentsByStageDashboard
-  owner: hes.siemelink@digital.ai
-  tiles:
-  - type: xlrelease.PlaceholderTile
-    row: 0
-    col: 0
-    content: Development
-  - name: Current applications
-    type: deployment.CurrentApplicationsTile
-    width: 1
-    height: 1
-    row: 1
-    col: 0
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Development
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-  - name: Activity
-    type: deployment.DeploymentsActivityTile
-    width: 1
-    row: 2
-    col: 0
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Development
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-  - name: Total deployments
-    type: deployment.TotalDeploymentsTile
-    width: 1
-    height: 1
-    row: 4
-    col: 0
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Development
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-  - name: Deployments
-    type: deployment.DeploymentsDistributionTile
-    width: 1
-    row: 5
-    col: 0
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Development
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-    height: 1
-  - name: Deployment success rate
-    type: deployment.DeploymentsSuccessRateTile
-    width: 1
-    height: 1
-    row: 6
-    col: 0
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Development
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-  - type: xlrelease.PlaceholderTile
-    row: 0
-    col: 1
-    content: Test
-  - name: Current applications
-    type: deployment.CurrentApplicationsTile
-    width: 1
-    height: 1
-    row: 1
-    col: 1
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Test
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-  - name: Activity
-    type: deployment.DeploymentsActivityTile
-    width: 1
-    row: 2
-    col: 1
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Test
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-  - name: Total deployments
-    type: deployment.TotalDeploymentsTile
-    width: 1
-    height: 1
-    row: 4
-    col: 1
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Test
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-  - name: Deployments
-    type: deployment.DeploymentsDistributionTile
-    width: 1
-    row: 5
-    col: 1
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Test
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-    height: 1
-  - name: Deployment success rate
-    type: deployment.DeploymentsSuccessRateTile
-    width: 1
-    height: 1
-    row: 6
-    col: 1
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Test
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-  - type: xlrelease.PlaceholderTile
-    row: 0
-    col: 2
-    content: Acceptance
-  - name: Current applications
-    type: deployment.CurrentApplicationsTile
-    width: 1
-    height: 1
-    row: 1
-    col: 2
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Acceptance
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-  - name: Activity
-    type: deployment.DeploymentsActivityTile
-    width: 1
-    row: 2
-    col: 2
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Acceptance
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-  - name: Total deployments
-    type: deployment.TotalDeploymentsTile
-    width: 1
-    height: 1
-    row: 4
-    col: 2
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Acceptance
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-  - name: Deployments
-    type: deployment.DeploymentsDistributionTile
-    width: 1
-    row: 5
-    col: 2
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Acceptance
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-    height: 1
-  - name: Deployment success rate
-    type: deployment.DeploymentsSuccessRateTile
-    width: 1
-    height: 1
-    row: 6
-    col: 2
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Acceptance
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-  - type: xlrelease.PlaceholderTile
-    row: 0
-    col: 3
-    content: Production
-  - name: Current applications
-    type: deployment.CurrentApplicationsTile
-    width: 1
-    height: 1
-    row: 1
-    col: 3
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Production
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-  - name: Activity
-    type: deployment.DeploymentsActivityTile
-    width: 1
-    row: 2
-    col: 3
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Production
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-  - name: Total deployments
-    type: deployment.TotalDeploymentsTile
-    width: 1
-    height: 1
-    row: 4
-    col: 3
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Production
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-  - name: Deployments
-    type: deployment.DeploymentsDistributionTile
-    width: 1
-    row: 5
-    col: 3
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Production
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-    height: 1
-  - name: Deployment success rate
-    type: deployment.DeploymentsSuccessRateTile
-    width: 1
-    height: 1
-    row: 6
-    col: 3
-    filters:
-    - type: xlrelease.EnvironmentStageFilter
-      stage: Production
-    - type: xlrelease.FolderFilter
-      folder: ./
-    - type: xlrelease.DateFilter
-      timeFrame: LAST_YEAR
-  description: On Deploy Staging
-  columns: 4
-  filters:
-  - type: xlrelease.FolderFilter
-    folder: ./
-  - type: xlrelease.DateFilter
-    timeFrame: LAST_YEAR
