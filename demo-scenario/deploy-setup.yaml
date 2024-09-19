@@ -3,7 +3,7 @@ kind: Applications
 spec:
   - directory: Applications/Users
     children:
-      - directory: Hes
+      - directory: me
         children:
           - name: TestApp
             type: udm.Application

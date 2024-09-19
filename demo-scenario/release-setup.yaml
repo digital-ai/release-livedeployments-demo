@@ -23,9 +23,9 @@ spec:
     - name: Deploy to DEV
       type: deploy.Deploy
       server: Local Deploy (Docker)
-      deploymentApplication: Applications/Users/Hes/TestApp
+      deploymentApplication: Applications/Users/me/TestApp
       deploymentVersion: "${version}"
-      deploymentPackage: "Applications/Users/Hes/TestApp/${version}"
+      deploymentPackage: "Applications/Users/me/TestApp/${version}"
       deploymentEnvironment: TestApp/DEV
       numberOfContinueRetrials: 0
       pollingInterval: 10
@@ -42,9 +42,9 @@ spec:
     - name: Deploy to TEST
       type: deploy.Deploy
       server: Local Deploy (Docker)
-      deploymentApplication: Applications/Users/Hes/TestApp
+      deploymentApplication: Applications/Users/me/TestApp
       deploymentVersion: "1.0"
-      deploymentPackage: Applications/Users/Hes/TestApp/1.0
+      deploymentPackage: Applications/Users/me/TestApp/1.0
       deploymentEnvironment: Environments/TestApp/TEST
       numberOfContinueRetrials: 0
       pollingInterval: 10
@@ -61,9 +61,9 @@ spec:
     - name: Deploy to ACC
       type: deploy.Deploy
       server: Local Deploy (Docker)
-      deploymentApplication: Applications/Users/Hes/TestApp
+      deploymentApplication: Applications/Users/me/TestApp
       deploymentVersion: "1.0"
-      deploymentPackage: Applications/Users/Hes/TestApp/1.0
+      deploymentPackage: Applications/Users/me/TestApp/1.0
       deploymentEnvironment: Environments/TestApp/ACC
       numberOfContinueRetrials: 0
       pollingInterval: 10
@@ -80,9 +80,9 @@ spec:
     - name: Deploy to PROD
       type: deploy.Deploy
       server: Local Deploy (Docker)
-      deploymentApplication: Applications/Users/Hes/TestApp
+      deploymentApplication: Applications/Users/me/TestApp
       deploymentVersion: "1.0"
-      deploymentPackage: Applications/Users/Hes/TestApp/1.0
+      deploymentPackage: Applications/Users/me/TestApp/1.0
       deploymentEnvironment: Environments/TestApp/PROD
       numberOfContinueRetrials: 0
       pollingInterval: 10
