@@ -6,6 +6,7 @@ This repository contains demo for Digital.ai Release and Deploy live deployments
 
 * Docker 
 * `host.docker.internal` in `/etc/hosts` pointing to `127.0.0.1`
+* create `secret.xlvals` file and fill in credentials, see `secret.xlvals.example`
 
 ## After Release and Deploy are started
 
