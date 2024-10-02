@@ -6,24 +6,3 @@ spec:
     url: !value argoCdUrl
     username: !value argoCdUsername
     password: !value argoCdPassword
-
----
-apiVersion: xl-release/v1
-kind: Templates
-metadata:
-  home: Application Demo
-spec:
-  - name: ArgoCD Webhook Endpoint
-    type: events.PostWebhookEndpoint
-    path: argocd
-    authentication:
-      type: events.NoAuthentication
-  - name: ArgoCD Deployment Config
-    type: argocd.DeploymentConfig
-    application: .*
-  - name: ArgoCD Status Webhook Event Source
-    type: argo.StatusWebhookEventSource
-    sourceServer: ArgoCD Server Connection
-    eventSource: ArgoCD Webhook Endpoint
-    liveDeploymentConfigs:
-    - ArgoCD Deployment Config
