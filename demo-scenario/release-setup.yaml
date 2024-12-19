@@ -12,7 +12,7 @@ kind: Templates
 metadata:
   home: Application Demo
 spec:
-- template: TestApp Deploy Pipeline
+- template: Acme-Backend Deploy Pipeline
   phases:
   - phase: DEV
     tasks:
@@ -23,10 +23,10 @@ spec:
     - name: Deploy to DEV
       type: deploy.Deploy
       server: Local Deploy (Docker)
-      deploymentApplication: Applications/Users/me/TestApp
+      deploymentApplication: Applications/Users/me/Acme-Backend
       deploymentVersion: "${version}"
-      deploymentPackage: "Applications/Users/me/TestApp/${version}"
-      deploymentEnvironment: TestApp/DEV
+      deploymentPackage: "Applications/Users/me/Acme-Backend/${version}"
+      deploymentEnvironment: Acme-Backend/DEV
       numberOfContinueRetrials: 0
       pollingInterval: 10
       numberOfPollingTrials: 0
@@ -42,10 +42,10 @@ spec:
     - name: Deploy to TEST
       type: deploy.Deploy
       server: Local Deploy (Docker)
-      deploymentApplication: Applications/Users/me/TestApp
+      deploymentApplication: Applications/Users/me/Acme-Backend
       deploymentVersion: "1.0"
-      deploymentPackage: Applications/Users/me/TestApp/1.0
-      deploymentEnvironment: Environments/TestApp/TEST
+      deploymentPackage: Applications/Users/me/Acme-Backend/1.0
+      deploymentEnvironment: Environments/Acme-Backend/TEST
       numberOfContinueRetrials: 0
       pollingInterval: 10
       numberOfPollingTrials: 0
@@ -61,10 +61,10 @@ spec:
     - name: Deploy to ACC
       type: deploy.Deploy
       server: Local Deploy (Docker)
-      deploymentApplication: Applications/Users/me/TestApp
+      deploymentApplication: Applications/Users/me/Acme-Backend
       deploymentVersion: "1.0"
-      deploymentPackage: Applications/Users/me/TestApp/1.0
-      deploymentEnvironment: Environments/TestApp/ACC
+      deploymentPackage: Applications/Users/me/Acme-Backend/1.0
+      deploymentEnvironment: Environments/Acme-Backend/ACC
       numberOfContinueRetrials: 0
       pollingInterval: 10
       numberOfPollingTrials: 0
@@ -80,10 +80,10 @@ spec:
     - name: Deploy to PROD
       type: deploy.Deploy
       server: Local Deploy (Docker)
-      deploymentApplication: Applications/Users/me/TestApp
+      deploymentApplication: Applications/Users/me/Acme-Backend
       deploymentVersion: "1.0"
-      deploymentPackage: Applications/Users/me/TestApp/1.0
-      deploymentEnvironment: Environments/TestApp/PROD
+      deploymentPackage: Applications/Users/me/Acme-Backend/1.0
+      deploymentEnvironment: Environments/Acme-Backend/PROD
       numberOfContinueRetrials: 0
       pollingInterval: 10
       numberOfPollingTrials: 0

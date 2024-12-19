@@ -4,7 +4,7 @@ kind: Release
 metadata:
   home: Application Demo
 spec:
-  name: Deploy TestApp 1.0
-  template: TestApp Deploy Pipeline
+  name: Deploy Acme-Backend 1.0
+  template: Acme-Backend Deploy Pipeline
   variables:
     version: '1.0'

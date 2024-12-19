@@ -5,7 +5,7 @@ spec:
     children:
       - directory: me
         children:
-          - name: TestApp
+          - name: Acme-Backend
             type: udm.Application
             lastVersion: "1.3"
             children:
@@ -21,7 +21,7 @@ spec:
 apiVersion: xl-deploy/v1
 kind: Environments
 spec:
-  - directory: Environments/TestApp
+  - directory: Environments/Acme-Backend
     children:
       - name: DEV
         type: udm.Environment
