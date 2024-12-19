@@ -17,6 +17,7 @@ services:
     environment:
     - ADMIN_PASSWORD=admin
     - ACCEPT_EULA=Y
+    - SERVER_URL=http://release:5516
 
   setup:
     build: demo-scenario
