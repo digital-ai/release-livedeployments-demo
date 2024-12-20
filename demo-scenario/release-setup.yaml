@@ -100,6 +100,20 @@ spec:
   - type: xlrelease.BooleanVariable
     key: confirmDeployment
     label: Confirm deployments
-  riskProfile: Default risk profile
-  author: hes.siemelink@digital.ai
   defaultTargetFolder: ./
+- template: Cloud-native test procedure
+  phases:
+    - phase: Performance test
+      tasks:
+        - name: Wait for deployment in TEST
+          type: webhook.WaitForDeploymentEvent
+          deploymentStatuses:
+            - success
+        - name: Do performance testing
+          type: xlrelease.Task
+        - name: Performance approved
+          type: xlrelease.GateTask
+        - name: Promote application to ACC
+          type: argocd.UpdateApplication
+          capabilities:
+            - remote
