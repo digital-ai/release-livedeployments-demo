@@ -49,3 +49,10 @@ docker/xld/plugins
 secrets.xlvals
 deployit-license.lic
 xl-release-license.lic
+
+# Possible leftover from a failed build
+/release-runner/
+/release-fluxcd-integration/
+/release-argocd-integration/
+/release-xld-integration/
+/release-k8s-integration/

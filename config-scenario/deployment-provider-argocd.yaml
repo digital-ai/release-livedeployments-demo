@@ -3,6 +3,6 @@ kind: Templates
 spec:
   - name: ArgoCD Server Connection
     type: argocd.APIServer
-    url: !value argoCdUrl
+    url: !value argoCdServerUrl
     username: !value argoCdUsername
     password: !value argoCdPassword

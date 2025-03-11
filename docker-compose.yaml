@@ -8,6 +8,8 @@ services:
     environment:
     - ADMIN_PASSWORD=admin
     - ACCEPT_EULA=Y
+    networks:
+      - demo-network
 
   release:
     build: docker/xl-release
@@ -18,6 +20,8 @@ services:
     - ADMIN_PASSWORD=admin
     - ACCEPT_EULA=Y
     - SERVER_URL=http://release:5516
+    networks:
+      - demo-network
 
   setup:
     build: demo-scenario
@@ -27,23 +31,9 @@ services:
     command: ["apply", "--verbose", "--detach", "--file", "/data/setup.yaml"]
     volumes:
       - ./demo-scenario:/data:ro
+    networks:
+      - demo-network
 
-  remote-runner:
-    build: docker/remote-runner
-    depends_on:
-      - setup
-    environment:
-      - RELEASE_RUNNER_RELEASE_URL=http://localhost:5516
-      - PROJECT_NAME=release-remote-runner
-      - VERSION=24.1.6
-    network_mode: host
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /tmp:/tmp
-
-  container-registry:
-    image: registry:2
-    ports:
-      - "5050:5000"
-    volumes:
-      - .:/var/lib/registry
+networks:
+  demo-network:
+    driver: bridge

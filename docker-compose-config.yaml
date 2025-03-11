@@ -1,0 +1,13 @@
+version: '2.3'
+services:
+  setup:
+    build: config-scenario
+    command: ["apply", "--verbose", "--detach", "--file", "/data/setup.yaml"]
+    volumes:
+      - ./config-scenario:/data:ro
+    networks:
+      - release-livedeployments-demo_demo-network
+
+networks:
+  release-livedeployments-demo_demo-network:
+    external: true
