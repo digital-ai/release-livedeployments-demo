@@ -34,8 +34,7 @@ else
     echo ":::> GITHUB_USER is set to $GITHUB_USER"
 fi
 if [ -z "$GITHUB_TOKEN" ]; then
-    echo "!!!> GITHUB_TOKEN
-    read -p "???> Enter your GitHub token: " GITHUB_TOKEN
+    echo "!!!> GITHUB_TOKEN not set - it will be prompted by FluxCD"
 else
     echo ":::> GITHUB_TOKEN is set
 fi
