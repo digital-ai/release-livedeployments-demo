@@ -1,0 +1,19 @@
+# Precondition: Check if k3d command is available
+Shell: command -v k3d
+On error:
+  Print: |
+    Please install Flux before running this script
+    
+    Install command:  brew install k3d
+  Exit: 1
+
+---
+Script info: Spin up k3d cluster with a registry on your local machine
+
+---
+Print: Spinning up k3d cluster
+Shell: k3d cluster create xlrcluster --registry-create xlr-registry:5050
+
+---
+Print: |
+  Cluster xlrcluster created with registry xlr-registry:5050

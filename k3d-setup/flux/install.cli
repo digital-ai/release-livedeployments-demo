@@ -1,0 +1,13 @@
+Script info: Installs Flux CD in local k3d cluster
+
+Shell: kubectl config current-context
+
+Print: Current context is ${output}
+
+---
+Print: Installing Flux CD
+
+Shell: kubectl apply -f https://github.com/fluxcd/flux2/releases/latest/download/install.yaml
+
+---
+Print: Waiting for Flux CD to start -- check with k9s
