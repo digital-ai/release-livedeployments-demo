@@ -11,22 +11,11 @@ On error:
 Script info: Removes k3d cluster
 
 ---
-Prompt:
-  description: Are you sure you want to delete the k3d cluster?
-  enum:
-    - "Yes"
-    - "No"
-As: ${confirmation}
+Confirm:
+  message: Are you sure you want to delete the k3d cluster?
 
-If:
-  item: ${confirmation}
-  equals: "No"
-  then:
-    Print: Cluster uninstall canceled
-    Exit: 0
-
----
 Print: Deleting k3d cluster
+
 Shell: k3d cluster delete xlrcluster
 
 ---
