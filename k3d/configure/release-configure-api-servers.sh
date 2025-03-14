@@ -16,8 +16,8 @@ argoCdUsername=admin
 argoCdPassword=password
 
 fluxCdServerUrl=https://kubernetes.default.svc
-clientCrt=`kubectl config view --raw -o jsonpath='{.users[0].user.client-certificate-data}'`
-clientKey=`kubectl config view --raw -o jsonpath='{.users[0].user.client-key-data}'`
+clientCrt=`kubectl config view --raw -o jsonpath='{.users[?(@.name=="admin@k3d-xlrcluster")].user.client-certificate-data}'`
+clientKey=`kubectl config view --raw -o jsonpath='{.users[?(@.name=="admin@k3d-xlrcluster")].user.client-key-data}'`
 
 # Prepare the secrets.xlvals file
 cat <<EOF > config-scenario/secrets.xlvals
