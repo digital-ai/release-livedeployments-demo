@@ -24,26 +24,10 @@ Script info: Removes k3d cluster
 
 ## Confirmation
 
-Then we ask the user if they are sure they want to delete the k3d cluster. 
+Then we ask the user if they are sure they want to delete the k3d cluster. If the user answers "No", we print a message and exit the script.
 
 ```yaml instacli
-Prompt:
-  description: Are you sure you want to delete the k3d cluster?
-  enum:
-    - "Yes"
-    - "No"
-As: ${confirmation}
-```
-
-If the user answers "No", we print a message and exit the script.
-
-```yaml instacli
-If:
-  item: ${confirmation}
-  equals: "No"
-  then:
-    Print: Cluster uninstall canceled
-    Exit: 0
+Confirm: Are you sure you want to delete the k3d cluster?
 ```
 
 ## Actual deletion
