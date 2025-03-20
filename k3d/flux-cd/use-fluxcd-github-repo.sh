@@ -36,7 +36,7 @@ fi
 if [ -z "$GITHUB_TOKEN" ]; then
     echo "!!!> GITHUB_TOKEN not set - it will be prompted by FluxCD"
 else
-    echo ":::> GITHUB_TOKEN is set
+    echo ":::> GITHUB_TOKEN is set"
 fi
 read -p "???> Enter your FluxCD GitHub repository name: " GITHUB_REPO
 
