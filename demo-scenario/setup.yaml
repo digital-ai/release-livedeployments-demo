@@ -3,7 +3,7 @@ kind: Import
 metadata:
   imports:
   - deployment-provider-deploy.yaml
-  - deployment-provider-argocd.yaml
+#  - deployment-provider-argocd.yaml
   - deploy-setup.yaml
   - release-setup.yaml
   - demo-deployments.yaml
