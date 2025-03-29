@@ -1,4 +1,3 @@
-version: '2.3'
 services:
   deploy:
     build: docker/xl-deploy
@@ -28,7 +27,7 @@ services:
     depends_on:
       - deploy
       - release
-    command: ["apply", "--verbose", "--detach", "--file", "/data/setup.yaml"]
+    command: ["apply", "--detach", "--file", "/data/setup.yaml"]
     volumes:
       - ./demo-scenario:/data:ro
     networks:

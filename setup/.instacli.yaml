@@ -1,4 +1,5 @@
 Script info: |
-  Installs K3d into local Docker
+  Configures the demo environment witih ArgoCD, Flux and more. 
+  Start by installing the k3d Kubernetes cluster.
   
   

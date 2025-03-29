@@ -14,7 +14,7 @@ First we start by checking if the k3d command is available. If it is not, we giv
 Shell: command -v k3d
 On error:
   Print: |
-    Please install Flux before running this script
+    Please install `k3d` before running this script
     
     Install command:  brew install k3d
   Exit: 1

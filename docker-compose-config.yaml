@@ -1,8 +1,7 @@
-version: '2.3'
 services:
   setup:
     build: config-scenario
-    command: ["apply", "--verbose", "--detach", "--file", "/data/setup.yaml"]
+    command: ["apply", "--detach", "--file", "/data/setup.yaml"]
     volumes:
       - ./config-scenario:/data:ro
     networks:
