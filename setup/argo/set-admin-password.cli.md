@@ -1,4 +1,4 @@
-# Sets ArgoCD admin password.
+# Sets ArgoCD admin password
   
 Sets the admin password for ArgoCD. 
 

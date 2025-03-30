@@ -1,3 +1,4 @@
 Script info: Configure Release runner
 
-Print: Not implemented
+Print:
+  Use `xl kube install` to install the runner.
