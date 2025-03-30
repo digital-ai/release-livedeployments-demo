@@ -1,41 +1,36 @@
 # Configure Release for Flux
 
-Adds configuration to Release to connect to FluxCD servers.
+Configure Release to connect to FluxCD.
 
-## Get data from Flux system
+## Prerequisites
+
+Make sure `kubectl` is connected to our k3d cluster.
+
+```yaml instacli
+Shell: kubectl config current-context
+Expected output: k3d-xlrcluster
+```
+
+## Get credentials
 
 We use `kubectl` to get the connection certificate and key.
 
 ```yaml instacli
-Shell: kubectl config view --raw -o jsonpath='{.users[0].user.client-certificate-data}'
-As: ${client-certificate-data}
+Shell: kubectl config view --raw -o jsonpath={.users[0].user.client-certificate-data}
+As: ${client_certificate_data}
 ```
 
 ```yaml instacli
-Shell: kubectl config view --raw -o jsonpath='{.users[0].user.client-key-data}'
-As: ${client-key-data}
+Shell: kubectl config view --raw -o jsonpath={.users[0].user.client-key-data}
+As: ${client_key_data}
 ```
 
 ## Configure Release
 
-Use `xl` to configure the Release server.
-
-<!-- yaml instacli before
-# Hack to fix quotes
-Replace:  
-  text: "'"
-  in: ${client-certificate-data}
-  replace with: ""
-As: ${client-certificate-data}
----
-Replace:
-  text: "'"
-  in: ${client-key-data}
-  replace with: ""
-As: ${client-key-data}
--->
+Use `xl` to configure the Release server. Use the `--values` option to pass the certificate and key data to the command.
 
 ```yaml instacli
-Shell: ./xlw apply -f setup/flux/release-flux-config.yaml --values fluxUrl=https://kubernetes.default.svc --values fluxCertificate=${client-certificate-data} --values fluxKey=${client-key-data}
-Print: ${output}
+Shell:
+  command: ./xlw apply -f setup/flux/release-flux-config.yaml --values fluxUrl=https://kubernetes.default.svc --values fluxCertificate=${client_certificate_data} --values fluxKey=${client_key_data}
+  show output: true
 ```
