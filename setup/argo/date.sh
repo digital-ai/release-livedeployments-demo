@@ -1,0 +1,1 @@
+echo $(date +%FT%T%Z)

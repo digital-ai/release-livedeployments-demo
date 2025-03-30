@@ -1,8 +1,0 @@
-Script info: Installs Argo CD in local k3d cluster
-
-Shell: kubectl config current-context
-
-Print: Current context is ${output}
-
----
-# XXX - This is a placeholder for the actual installation steps
