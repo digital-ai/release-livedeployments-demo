@@ -18,6 +18,8 @@ On error:
 
 # Runner setup
 
+Install Digital.ai Release runner into the k3d cluster.
+
 ```yaml instacli
 Confirm: Set up Release runner in K3d?
       

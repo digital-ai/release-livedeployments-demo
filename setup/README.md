@@ -12,7 +12,7 @@ Start by installing the k3d Kubernetes cluster.
 
 ## Setup
 
-Use [Instacli](https://github.com/Hes-Siemelink/instacli)
+For an interactive experience, use [Instacli](https://github.com/Hes-Siemelink/instacli)
 
 You can set up the components individually by invoking the command
 
@@ -22,3 +22,4 @@ Or you can set up all components at once by invoking the command
 
     cli setup all
 
+If you can't use Instacli, just follow the instructions in the individual setup files.
