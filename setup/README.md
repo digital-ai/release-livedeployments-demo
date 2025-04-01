@@ -5,14 +5,20 @@ Start by installing the k3d Kubernetes cluster.
 
 ## Components
 
-- [k3d](k3d) - K3d - Lightweight Kubernetes in Docker - https://k3d.io
+- [k3d-cluster](k3d-cluster) - K3d - Lightweight Kubernetes in Docker - https://k3d.io
 - [flux](flux) - Flux CD - GitOps for Kubernetes - https://fluxcd.io/
 - [argo](argo) - ArgoCD - Declarative GitOps CD for Kubernetes - https://argo-cd.readthedocs.io/en/stable/
 - [runner](runner) - Digital.ai Release Runner
 
 ## Setup
 
-Start by installing the k3d Kubernetes cluster, it is needed by both the Flux and ArgoCD components.
+Use [Instacli](https://github.com/Hes-Siemelink/instacli)
 
-* [Install k3d](k3d/install.cli.md)
+You can set up the components individually by invoking the command
+
+    cli setup
+
+Or you can set up all components at once by invoking the command
+
+    cli setup all
 
