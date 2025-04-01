@@ -1,10 +1,6 @@
 # Install k3d cluster
 
-Info for Instacli help:
-
-```yaml instacli
-Script info: Spins up a k3d cluster on your local machine
-```
+Spins up a k3d cluster on your local machine
 
 ## Prerequisites
 

@@ -1,6 +1,7 @@
 # Demo environment setup
 
-Configures the demo environment witih ArgoCD, Flux and more.
+Configures the demo environment with ArgoCD, Flux and more.  
+Start by installing the k3d Kubernetes cluster.
 
 ## Components
 

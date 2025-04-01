@@ -1,5 +1,7 @@
 # Uninstall k3d cluster
 
+Removes a k3d cluster from your local machine
+
 ## Precondition 
 
 First we start by checking if the k3d command is available. If it is not, we print an error message and exit the script.
@@ -12,14 +14,6 @@ On error:
     
     Install command:  brew install k3d
   Exit: 1
-```
-
-## Script Info
-
-The info section comes after the precondition. This way the script can exit before any user prompts are shown.
-
-```yaml instacli
-Script info: Removes k3d cluster
 ```
 
 ## Confirmation

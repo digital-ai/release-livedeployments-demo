@@ -8,7 +8,6 @@ Credentials are specified as input parameters to the script. If not specified, t
  
 ```yaml instacli
 Script info:
-  description: Sets the admin password for ArgoCD
   input:
     password:
       description: New admin password for ArgoCD

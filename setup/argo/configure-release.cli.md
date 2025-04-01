@@ -8,7 +8,6 @@ Credentials are specified as input parameters to the script. If not specified, t
 
 ```yaml instacli
 Script info:
-  description: Configure Release to connect to ArgoCD
   input:
     url: ArgoCD URL
     username: Username

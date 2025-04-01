@@ -1,6 +1,7 @@
 # Connect GitHub repo
 
-Connects local Flux to a GitHub repo. The repository doesn't need to exist yet, it will be created if it doesn't.
+Connects local Flux to a GitHub repo. 
+The repository doesn't need to exist yet, it will be created if it doesn't.
 
 ## Prerequisites
 
@@ -32,7 +33,6 @@ You need to have a GitHub user and a personal access token. Make sure your token
 
 ```yaml instacli
 Script info:
-  description: Connects Flux to a GitHub repo.
   input:
     github_repo: GitHub repo url (will create repo if not exists)
     github_user: GitHub user

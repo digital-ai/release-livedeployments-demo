@@ -1,5 +1,0 @@
-Script info: |
-  Configures the demo environment witih ArgoCD, Flux and more. 
-  Start by installing the k3d Kubernetes cluster.
-  
-  
