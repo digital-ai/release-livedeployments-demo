@@ -1,4 +1,9 @@
 Script info: Configure Release runner
 
+Confirm: Set up runner in K3d?
+
 Print:
   Use `xl kube install` to install the runner.
+
+On error:
+  Print: Release runner not installed

@@ -1,6 +1,6 @@
 # Uninstall k3d cluster
 
-Removes a k3d cluster from your local machine
+Removes the k3d cluster from your local machine
 
 ## Precondition 
 

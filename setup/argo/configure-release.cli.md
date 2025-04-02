@@ -9,10 +9,15 @@ Credentials are specified as input parameters to the script. If not specified, t
 ```yaml instacli
 Script info:
   input:
-    url: ArgoCD URL
-    username: Username
+    url: 
+      description: ArgoCD URL
+      default: https://argocd-server.argocd
+    username: 
+      description: Username
+      default: admin
     password: 
       description: Password
+      default: $2a$10$rRyBsGSHK6.uc8fntPwVIuLVHgsAhAX7TcdrqW/RADU0uh7CaChLa  # bcrypt hash of 'password'
       secret: true
 ```
 
