@@ -1,0 +1,10 @@
+replicaCount: 1
+
+release:
+  url: http://dai-xlr-digitalai-release.digitalai
+  registrationToken: ""
+
+image:
+  repository: xebialabs
+  name: release-runner
+  tag: 24.1.12

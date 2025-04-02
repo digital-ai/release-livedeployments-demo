@@ -5,5 +5,21 @@ Confirm: Set up runner in K3d?
 Print:
   Use `xl kube install` to install the runner.
 
+
+---
+Create token: {}
+As: ${token}
+
+Output:
+  K8sSetup: PlainK8s
+  ServerType: dai-release-runner
+  RemoteRunnerToken: ${token}
+Save as: temp-answers.yaml
+
+Shell:
+  - command: xl kube install --quick-setup --skip-prompts --answers temp-answers.yaml
+    show output: true
+  - rm temp-answers.yaml
+
 On error:
   Print: Release runner not installed

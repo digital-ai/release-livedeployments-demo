@@ -50,6 +50,11 @@ secrets.xlvals
 deployit-license.lic
 xl-release-license.lic
 
+# xl kube install
+xebialabs
+digitalai
+ziprepo
+
 # Possible leftover from a failed build
 /release-runner/
 /release-fluxcd-integration/
