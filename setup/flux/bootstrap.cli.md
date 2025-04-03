@@ -43,10 +43,10 @@ Script info:
 The `flux bootstrap` command is used to connect your local Flux installation to a GitHub repository. 
 
 ```yaml instacli
-Print: |
-
-  Use the following command to connect to the repo:
-  
-  export GITHUB_TOKEN=${input.github_token}
-  flux bootstrap github --owner=${input.github_user} --repository=${input.github_repo} --branch=main --personal --path=clusters/staging
+Shell:
+  command: flux bootstrap github --owner=${input.github_user} --repository=${input.github_repo} --branch=main --personal --path=clusters/staging 
+  env:
+    GITHUB_TOKEN: ${input.github_token}
+  show command: true
+  show output: true
 ```
