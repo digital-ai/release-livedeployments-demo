@@ -2,24 +2,21 @@ Script info: Configure Release runner
 
 Confirm: Set up runner in K3d?
 
-Print:
-  Use `xl kube install` to install the runner.
-
-
 ---
 Create token: {}
 As: ${token}
 
-Output:
+---
+Temp file:
   K8sSetup: PlainK8s
   ServerType: dai-release-runner
+  RemoteRunnerReleaseUrl: 'http://host.k3d.internal:5516'
   RemoteRunnerToken: ${token}
-Save as: temp-answers.yaml
+As: ${answers}
 
 Shell:
-  - command: xl kube install --quick-setup --skip-prompts --answers temp-answers.yaml
-    show output: true
-  - rm temp-answers.yaml
+  command: xl kube install --quick-setup --skip-prompts --answers ${answers}
+  show output: true
 
 On error:
   Print: Release runner not installed
