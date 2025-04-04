@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Spinning up dockerized Release and Deploy"
-docker compose -f docker-compose.yaml -f docker-compose-runner.yaml up -d --build
+docker compose -f docker-compose.yaml up -d --build
 
 #echo "Spinning up dockerized Release Runner"
 #docker compose -f docker-compose-runner.yaml up -d --build
