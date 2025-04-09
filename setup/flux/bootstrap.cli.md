@@ -5,7 +5,7 @@ The repository doesn't need to exist yet, it will be created if it doesn't.
 
 ## Prerequisites
 
-First of all, you need to have your local k3d cluster running.  See [k3d cluster setup](../k3d-cluster) Make sure that it's your current cluster for `kubectl`.
+First of all, you need to have your local k3d cluster running.  See [k3d cluster setup](../k3d/k3d-cluster) Make sure that it's your current cluster for `kubectl`.
 
 ```yaml instacli
 Shell: kubectl config current-context

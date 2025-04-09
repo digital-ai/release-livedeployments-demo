@@ -3,12 +3,10 @@
 Set up of all the components in one go.
 
 ```yaml instacli
-For each:
-  ${script} in:
-    - k3d-cluster/start.cli.md
-    - runner/configure.cli
-    - argo/start.cli.md
-    - flux/start.cli.md
-  Run script:
-      resource: ${script}
+Run script:
+  - resource: k3d/cluster/start.cli.md
+  - resource: k3d/runner/install.cli.md
+  - resource: argo/start.cli.md
+  - resource: flux/start.cli.md
+
 ```
