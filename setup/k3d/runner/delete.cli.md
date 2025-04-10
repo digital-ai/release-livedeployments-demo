@@ -10,6 +10,7 @@ This is the minimal answers file that is needed:
 Temp file:
   K8sSetup: PlainK8s
   ServerType: dai-release-runner
+  RemoteRunnerReleaseName: k3d-runner
 As: ${answers_file}
 ```
 

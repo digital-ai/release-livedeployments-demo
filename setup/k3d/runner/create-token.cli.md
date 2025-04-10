@@ -19,7 +19,7 @@ POST:
   username: admin
   password: admin
   body:
-    tokenNote: ${date}
+    tokenNote: K3d runner ${date}
     globalPermissions: 
     - runner#registration
 

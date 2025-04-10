@@ -9,8 +9,7 @@ Confirm: Set up ArgoCD?
 Run install script
 
 ```yaml instacli
-Run script:
-  resource: install.cli.md
+Run script: install.cli.md
 As: ${argocd}
 ```
 

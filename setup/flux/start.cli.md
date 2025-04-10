@@ -9,15 +9,13 @@ Confirm: Set up FluxCD?
 Install Flux
 
 ```yaml instacli
-Run script:
-  resource: bootstrap.cli.md
+Run script: bootstrap.cli.md
 ```
 
 Configure Digital.ai Release connection to Flux
 
 ```yaml instacli
-Run script:
-  resource: configure-release.cli.md
+Run script: configure-release.cli.md
 ```
 
 Error handling

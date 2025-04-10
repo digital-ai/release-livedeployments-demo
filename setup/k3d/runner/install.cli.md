@@ -1,20 +1,13 @@
 # Install Runner
 
-Installs Release runner in K3d
-
-## Confirmation
-
-```yaml instacli
-Confirm: Set up runner in K3d?
-```
+Installs Release runner in K3d without user interaction.
 
 ## Create token
 
 Call the `create-token.cli.md` script to create a token for the runner.
 
 ```yaml instacli
-Run script:
-  resource: create-token.cli.md
+Run script: create-token.cli.md
 As: ${token}
 ```
 
@@ -28,6 +21,7 @@ Temp file:
   ServerType: dai-release-runner
   RemoteRunnerReleaseUrl: 'http://host.k3d.internal:5516'
   RemoteRunnerToken: ${token}
+  RemoteRunnerReleaseName: k3d-runner
 As: ${answers_file}
 ```
 
@@ -35,13 +29,4 @@ We invoke `xl kube` install with the options that pick default settings and prev
 
 ```shell
 xl kube install --quick-setup --skip-prompts --answers ${answers_file}
-```
-
-## Graceful exit
-
-Print a friendly message in case of an error or user cancelation
-
-```yaml instacli
-On error:
-  Print: Release runner not installed
 ```

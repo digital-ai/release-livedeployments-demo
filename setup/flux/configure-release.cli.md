@@ -6,9 +6,14 @@ Configure Release to connect to FluxCD.
 
 Make sure `kubectl` is connected to our k3d cluster.
 
-```yaml instacli
-Shell: kubectl config current-context
-Expected output: k3d-xlrcluster
+```shell
+kubectl config current-context
+```
+
+should give you the following output:
+
+```output
+k3d-xlrcluster
 ```
 
 ## Get credentials
@@ -29,8 +34,6 @@ As: ${client_key_data}
 
 Use `xl` to configure the Release server. Use the `--values` option to pass the certificate and key data to the command.
 
-```yaml instacli
-Shell:
-  command: ./xlw apply -f setup/flux/release-flux-config.yaml --values fluxUrl=https://kubernetes.default.svc --values fluxCertificate=${client_certificate_data} --values fluxKey=${client_key_data}
-  show output: true
+```shell
+./xlw apply -f setup/flux/release-flux-config.yaml --values fluxUrl=https://kubernetes.default.svc --values fluxCertificate=${client_certificate_data} --values fluxKey=${client_key_data}
 ```
