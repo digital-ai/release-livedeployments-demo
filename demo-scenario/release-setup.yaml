@@ -43,8 +43,8 @@ spec:
       type: deploy.Deploy
       server: Local Deploy (Docker)
       deploymentApplication: Applications/Users/me/Acme-Backend
-      deploymentVersion: "1.0"
-      deploymentPackage: Applications/Users/me/Acme-Backend/1.0
+      deploymentVersion: "${version}"
+      deploymentPackage: "Applications/Users/me/Acme-Backend/${version}"
       deploymentEnvironment: Environments/Acme-Backend/TEST
       numberOfContinueRetrials: 0
       pollingInterval: 10
@@ -62,8 +62,8 @@ spec:
       type: deploy.Deploy
       server: Local Deploy (Docker)
       deploymentApplication: Applications/Users/me/Acme-Backend
-      deploymentVersion: "1.0"
-      deploymentPackage: Applications/Users/me/Acme-Backend/1.0
+      deploymentVersion: "${version}"
+      deploymentPackage: "Applications/Users/me/Acme-Backend/${version}"
       deploymentEnvironment: Environments/Acme-Backend/ACC
       numberOfContinueRetrials: 0
       pollingInterval: 10
@@ -81,8 +81,8 @@ spec:
       type: deploy.Deploy
       server: Local Deploy (Docker)
       deploymentApplication: Applications/Users/me/Acme-Backend
-      deploymentVersion: "1.0"
-      deploymentPackage: Applications/Users/me/Acme-Backend/1.0
+      deploymentVersion: "${version}"
+      deploymentPackage: "Applications/Users/me/Acme-Backend/${version}"
       deploymentEnvironment: Environments/Acme-Backend/PROD
       numberOfContinueRetrials: 0
       pollingInterval: 10

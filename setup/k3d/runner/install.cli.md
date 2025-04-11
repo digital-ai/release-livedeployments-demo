@@ -11,9 +11,9 @@ Run script: create-token.cli.md
 As: ${token}
 ```
 
-## xl kube setup
+## Setup with xl kube
 
-We can specifiy a minimal answer fil for `xl kube` that will provide a non-interactive setup:
+We can specify a minimal answer file for `xl kube` for a non-interactive setup:
 
 ```yaml instacli
 Temp file:
@@ -25,7 +25,7 @@ Temp file:
 As: ${answers_file}
 ```
 
-We invoke `xl kube` install with the options that pick default settings and prevent user interaction:
+We invoke `xl kube install` with the options that pick default settings and prevent user interaction:
 
 ```shell
 xl kube install --quick-setup --skip-prompts --answers ${answers_file}
