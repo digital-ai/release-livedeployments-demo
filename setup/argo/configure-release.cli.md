@@ -17,7 +17,7 @@ Script info:
       default: admin
     password: 
       description: Password
-      default: $2a$10$rRyBsGSHK6.uc8fntPwVIuLVHgsAhAX7TcdrqW/RADU0uh7CaChLa  # bcrypt hash of 'password'
+      default: password
       secret: true
 ```
 
@@ -25,8 +25,6 @@ Script info:
 
 Use `xl` to configure the Release server. Use the `--values` option to pass the certificate and key data to the command.
 
-```yaml instacli
-Shell:
-  command: ./xlw apply -f setup/argo/release-argo-config.yaml --values fluxUrl=https://kubernetes.default.svc --values argoCdServerUrl=${input.url} --values argoCdUsername=${input.username} --values argoCdPassword=${input.password}
-  show output: true
+```shell
+./xlw apply -f setup/argo/release-argo-config.yaml --values fluxUrl=https://kubernetes.default.svc --values argoCdServerUrl=${input.url} --values argoCdUsername=${input.username} --values argoCdPassword=${input.password}
 ```

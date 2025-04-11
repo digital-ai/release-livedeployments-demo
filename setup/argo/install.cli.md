@@ -11,23 +11,23 @@ Shell: kubectl config current-context
 Expected output: k3d-xlrcluster
 ```
 
+## Create namespace
+
+First we have to create the `argocd` namespace in the k3d cluster. This is where ArgoCD will be installed.
+
+We use `kubectl` to create the namespace.
+
+```shell
+kubectl create namespace argocd || true
+```
+
 ## Install ArgoCD using kubectl
 
 Use `kubectl` to install ArgoCD in the k3d cluster. The command will install ArgoCD in the `argocd` namespace and create a service account for it.
 
 ```yaml instacli
-Shell: kubectl create namespace argocd
-```
-
-```yaml instacli
 Print: Spinning up ArgoCD on cluster...
-Shell:
-  command: kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-  show output: true
 ```
-
-To create the service account, we need to prepare the yaml patch the contains the password and the timestamp.
-
-```yaml instacli
-Set admin password: {}
+```shell
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
