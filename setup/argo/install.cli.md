@@ -6,9 +6,13 @@ Installs Argo CD in local k3d cluster
   
 Make sure `kubectl` is connected to our k3d cluster.
   
-```yaml instacli
-Shell: kubectl config current-context
-Expected output: k3d-xlrcluster
+```shell
+kubectl config current-context
+```
+Should print:
+
+```output
+k3d-xlrcluster
 ```
 
 ## Create namespace
@@ -18,7 +22,7 @@ First we have to create the `argocd` namespace in the k3d cluster. This is where
 We use `kubectl` to create the namespace.
 
 ```shell
-kubectl create namespace argocd || true
+kubectl create namespace argocd
 ```
 
 ## Install ArgoCD using kubectl
@@ -26,8 +30,9 @@ kubectl create namespace argocd || true
 Use `kubectl` to install ArgoCD in the k3d cluster. The command will install ArgoCD in the `argocd` namespace and create a service account for it.
 
 ```yaml instacli
-Print: Spinning up ArgoCD on cluster...
+Print: Spinning up ArgoCD on K3d cluster
 ```
+
 ```shell
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```

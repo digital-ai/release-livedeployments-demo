@@ -4,18 +4,18 @@ Configure Release to connect to ArgoCD.
 
 ## Get credentials
 
-Credentials are specified as input parameters to the script. If not specified, the script will prompt the user for them.
+We use default credentials to connect to ArgoCD. 
 
 ```yaml instacli
 Script info:
   input:
-    url: 
+    ARGO_URL: 
       description: ArgoCD URL
       default: https://argocd-server.argocd
-    username: 
+    ARGO_USERNAME: 
       description: Username
       default: admin
-    password: 
+    ARGO_PASSWORD: 
       description: Password
       default: password
       secret: true
@@ -23,8 +23,8 @@ Script info:
 
 ## Configure Release
 
-Use `xl` to configure the Release server. Use the `--values` option to pass the certificate and key data to the command.
+Use `xl` to configure the Release server using the yaml file [release-argo-config.yaml](release-argo-config.yaml). Connection details are passed using the `--values` option.
 
 ```shell
-./xlw apply -f setup/argo/release-argo-config.yaml --values fluxUrl=https://kubernetes.default.svc --values argoCdServerUrl=${input.url} --values argoCdUsername=${input.username} --values argoCdPassword=${input.password}
+./xlw apply -f setup/argo/release-argo-config.yaml --values argoCdServerUrl=${ARGO_URL} --values argoCdUsername=${ARGO_USERNAME} --values argoCdPassword=${ARGO_PASSWORD}
 ```

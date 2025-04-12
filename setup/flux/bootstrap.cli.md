@@ -34,21 +34,14 @@ You need to have a GitHub user and a personal access token. Make sure your token
 ```yaml instacli
 Script info:
   input:
-    github_repo: GitHub repo url (will create repo if not exists)
-    github_user: GitHub user
-    github_token: User token to connect to GitHub
+    GITHUB_REPO: GitHub repo url (will create repo if not exists)
+    GITHUB_USER: GitHub user
+    GITHUB_TOKEN: User token to connect to GitHub
 ```
 
 ## Flux bootstrap command
 The `flux bootstrap` command is used to connect your local Flux installation to a GitHub repository. 
 
-```yaml instacli
-Shell:
-  command: flux bootstrap github --owner=${GITHUB_USER} --repository=${GITHUB_REPO} --branch=main --personal --path=clusters/staging 
-  env:
-    GITHUB_TOKEN: ${input.github_token}
-    GITHUB_USER: ${input.github_user}
-    GITHUB_REPO: ${input.github_repo}
-  show command: true
-  show output: true
+```shell
+flux bootstrap github --owner=${GITHUB_USER} --repository=${GITHUB_REPO} --branch=main --personal --path=clusters/staging 
 ```

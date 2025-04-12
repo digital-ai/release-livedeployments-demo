@@ -1,6 +1,6 @@
 # ArgoCD setup
 
-Set up of all the components in one go.
+Installs ArgoCD and configures Release.
 
 
 ## User confirmation

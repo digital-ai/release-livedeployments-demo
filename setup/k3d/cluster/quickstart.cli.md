@@ -1,11 +1,11 @@
 # K3d cluster setup
 
-Set up of all the components in one go.
+Sets up K3d on local Docker
 
 ```yaml instacli
 Confirm: Set up K3d?
       
-Run script: create.cli.md
+Run script: install.cli.md
 
 On error:
   Print: K3d cluster not installed
