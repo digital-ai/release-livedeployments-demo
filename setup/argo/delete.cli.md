@@ -6,7 +6,11 @@ Deletes ArgoCD from the k3d cluster.
 
 Uninstall ArgoCD using the same manifest we installed it with
 
-```shell
+```yaml instacli
+Print: Removing ArgoCD from K3d cluster
+```
+
+```shell show_output=false
 kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
 

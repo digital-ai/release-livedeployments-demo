@@ -33,6 +33,6 @@ Use `kubectl` to install ArgoCD in the k3d cluster. The command will install Arg
 Print: Spinning up ArgoCD on K3d cluster
 ```
 
-```shell
+```shell show_output=false show_command=true
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
