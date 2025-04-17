@@ -20,6 +20,6 @@ To tear down Release and Deploy:
 
 ## Additional components
 
-**Note:** The setup requires __docker, k3d, helm, git, kubectl, argocd, and flux__ to be installed on the host machine. Make sure you have GITHUB_TOKEN ready for the setup of FluxCD together with a clonable repository.
+Use the interactive setup to install __k3d, argocd, and flux__  on the host machine. Make sure you have GITHUB_TOKEN ready for the setup of FluxCD together with a clonable repository.
 
 See [setup](setup/README.md) for more information on how to set up the demo environment.

@@ -10,15 +10,25 @@ Start by installing the k3d Kubernetes cluster.
 - [argo](argo) - ArgoCD - Declarative GitOps CD for Kubernetes - https://argo-cd.readthedocs.io/en/stable/
 - [runner](k3d/runner) - Digital.ai Release Runner
 
+## Prerequisites
+
+* Java 17 or higher
+* The `k3d` utility
+* The `flux` utility
+
 ## Setup
 
-For an interactive experience, use [Instacli](https://github.com/Hes-Siemelink/instacli)
+For an interactive experience, use [Instacli](https://github.com/Hes-Siemelink/instacli). Launch Instacli by invoking the `./cli` command. This will download Instacli if not already present.
 
-You can set up the components by invoking the command
+If you can't run Instacli, just browse the markdown files in this directory and subdirectories. They contain detailed instructions and the same commands as the Instacli scripts. In fact, the markdown files *are* the Instacli scripts! 😲🤔
 
-    cli setup
+Let's start from the top:
 
-This will show you the options to choose from:
+```shell
+./cli setup
+```
+
+You will be shown the options to choose from:
 
 ```
 Configures the demo environment with ArgoCD, Flux and more.
@@ -39,17 +49,17 @@ Here are some commands that might be helpful to run:
 Setting up the runner in k3d:
 
 ```shell
-cli setup k3d cluster runner install
+./cli setup k3d cluster runner install
 ```
 
 Removing the k3d cluster with everything in it:
 
 ```shell
-cli setup k3d cluster delete
+./cli setup k3d cluster delete
 ```
 
 Interactive setup of Flux with configuration in Release:
 
 ```shell
-cli setup k3d flux quickstart
+./cli setup k3d flux quickstart
 ```
