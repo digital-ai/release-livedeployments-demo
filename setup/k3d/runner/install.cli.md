@@ -19,7 +19,7 @@ We can specify a minimal answer file for `xl kube` for a non-interactive setup:
 Temp file:
   K8sSetup: PlainK8s
   ServerType: dai-release-runner
-  RemoteRunnerReleaseUrl: 'http://host.k3d.internal:5516'
+  RemoteRunnerReleaseUrl: 'http://release:5516'
   RemoteRunnerToken: ${token}
   RemoteRunnerReleaseName: k3d-runner
 As: ${answers_file}

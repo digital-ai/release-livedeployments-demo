@@ -6,7 +6,7 @@ WAIT_INTERVAL=5
 start_time=$(date +%s)
 end_time=$((start_time + MAX_WAIT_SECONDS))
 
-api_url="http://localhost:5516/api/v1/personal-access-tokens"
+api_url="http://release:5516/api/v1/personal-access-tokens"
 unique_id=$(date +%s%N | md5sum | awk '{print $1}')
 
 while true; do
