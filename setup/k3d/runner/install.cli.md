@@ -13,20 +13,18 @@ As: ${token}
 
 ## Setup with xl kube
 
-We can specify a minimal answer file for `xl kube` for a non-interactive setup:
+We can specify a minimal `answers.yaml` file for `xl kube` for a non-interactive setup:
 
-```yaml instacli
-Temp file:
+```yaml file=answers.yaml
   K8sSetup: PlainK8s
   ServerType: dai-release-runner
   RemoteRunnerReleaseUrl: 'http://host.k3d.internal:5516'
   RemoteRunnerToken: ${token}
   RemoteRunnerReleaseName: k3d-runner
-As: ${answers_file}
 ```
 
 We invoke `xl kube install` with the options that pick default settings and prevent user interaction:
 
 ```shell
-xl kube install --quick-setup --skip-prompts --answers ${answers_file}
+xl kube install --quick-setup --skip-prompts --answers ${answers.yaml}
 ```
