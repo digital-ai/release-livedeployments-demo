@@ -40,8 +40,9 @@ Print: Deleting k3d cluster
 We do this by running the `k3d cluster delete` command.
 
 ```shell show_output=false
-k3d cluster delete xlrcluster
+k3d cluster delete democluster
 ```
+
 Finally, we print a message to confirm that the cluster has been deleted.
 
 ```yaml instacli

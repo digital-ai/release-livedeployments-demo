@@ -13,7 +13,7 @@ kubectl config current-context
 should give you the following output:
 
 ```output
-k3d-xlrcluster
+k3d-democluster
 ```
 
 ## Get credentials

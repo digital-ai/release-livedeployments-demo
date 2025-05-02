@@ -15,7 +15,7 @@ kubectl config current-context
 Should print:
 
 ```output
-k3d-xlrcluster
+k3d-democluster
 ```
 ### 2. Flux command
 

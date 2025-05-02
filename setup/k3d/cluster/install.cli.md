@@ -30,11 +30,11 @@ Print: Spinning up k3d cluster
 Use `k3d cluster create` to create a new cluster on your local machine.
 
 ```shell show_output=false
-k3d cluster create xlrcluster
+k3d cluster create democluster
 ```
 
 Finally, we print a message to confirm that the cluster has been created.
 
 ```yaml instacli
-Print: Cluster xlrcluster created
+Print: Cluster democluster created
 ```
