@@ -52,8 +52,8 @@ Script info:
 ```
 
 ## Flux bootstrap command
-The `flux bootstrap` command is used to connect your local Flux installation to a GitHub repository. 
+The `flux bootstrap` command is used to connect your local Flux installation to a GitHub repository.
 
-```shell
+```shell show_command=true
 flux bootstrap github --owner=${GITHUB_USER} --repository=${GITHUB_REPO} --branch=main --personal --path=clusters/staging 
 ```

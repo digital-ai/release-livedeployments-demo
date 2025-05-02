@@ -2,6 +2,10 @@
 
 Creates a token in Release for the Runner.
 
+```yaml instacli
+Print: Creating token for Runner in Digital.ai Release
+```
+
 First, get a unique identifier for the token.
 
 ```yaml instacli
@@ -12,8 +16,6 @@ As: ${date}
 Now we can make the call
 
 ```yaml instacli
-Print: Creating token for Runner in Digital.ai Release
-
 POST:
   url: http://localhost:5516/api/v1/personal-access-tokens
   username: admin

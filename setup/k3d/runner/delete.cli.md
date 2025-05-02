@@ -2,6 +2,12 @@
 
 Deletes Release runner from k3d cluster
 
+```yaml instacli
+Print: Deleting Release Runner from k3d cluster
+```
+
+## Use xl kube
+
 The runner is deleted from the k3d cluster using the `xl kube` utility.
 
 This is the minimal `answers.yaml` file that is needed:
@@ -14,6 +20,12 @@ RemoteRunnerReleaseName: k3d-runner
 
 With this file you can run the `clean` command:
 
-```shell cd=${SCRIPT_TEMP_DIR}
+```shell cd=${SCRIPT_TEMP_DIR} show_output=false
 xl kube clean --quick-setup --skip-prompts --answers answers.yaml
+```
+
+## Confirmation
+
+```yaml instacli
+Print: Runner deleted
 ```

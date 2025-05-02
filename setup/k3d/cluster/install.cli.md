@@ -24,7 +24,7 @@ On error:
 ## Spin up cluster
 
 ```yaml instacli
-Print: Spinning up k3d cluster
+Print: Spinning up k3d cluster 'democluster'
 ```
 
 Use `k3d cluster create` to create a new cluster on your local machine.
@@ -36,5 +36,5 @@ k3d cluster create democluster
 Finally, we print a message to confirm that the cluster has been created.
 
 ```yaml instacli
-Print: Cluster democluster created
+Print: Cluster created
 ```
