@@ -13,7 +13,7 @@ kubectl config current-context
 should give you the following output:
 
 ```output
-k3d-xlrcluster
+k3d-democluster
 ```
 
 ## Get credentials
@@ -34,6 +34,6 @@ As: ${client_key_data}
 
 Use `xl` to configure the Release server. Use the `--values` option to pass the certificate and key data to the command.
 
-```shell
+```shell show_output=false
 ./xlw apply -f setup/flux/release-flux-config.yaml --values fluxUrl=https://kubernetes.default.svc --values fluxCertificate=${client_certificate_data} --values fluxKey=${client_key_data}
 ```

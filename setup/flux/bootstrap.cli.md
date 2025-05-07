@@ -5,17 +5,29 @@ The repository doesn't need to exist yet, it will be created if it doesn't.
 
 ## Prerequisites
 
-First of all, you need to have your local k3d cluster running.  See [k3d cluster setup](../k3d/k3d-cluster) Make sure that it's your current cluster for `kubectl`.
+### 1. Local k3d cluster
 
-```yaml instacli
-Shell: kubectl config current-context
-Expected output: k3d-xlrcluster
+Make sure `kubectl` is connected to our k3d cluster.
+
+```shell
+kubectl config current-context
 ```
+Should print:
+
+```output
+k3d-democluster
+```
+### 2. Flux command
 
 You need to have the `flux` command installed on our local machine.
 
+```shell show_output=false
+command -v flux
+```
+
+If not, print an error message and exit the script.
+
 ```yaml instacli
-Shell: command -v flux
 On error:
   Print: |
     Please install Flux before running this script
@@ -40,8 +52,8 @@ Script info:
 ```
 
 ## Flux bootstrap command
-The `flux bootstrap` command is used to connect your local Flux installation to a GitHub repository. 
+The `flux bootstrap` command is used to connect your local Flux installation to a GitHub repository.
 
-```shell
+```shell show_command=true
 flux bootstrap github --owner=${GITHUB_USER} --repository=${GITHUB_REPO} --branch=main --personal --path=clusters/staging 
 ```

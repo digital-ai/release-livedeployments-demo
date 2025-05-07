@@ -4,10 +4,15 @@ Removes the k3d cluster from your local machine
 
 ## Precondition 
 
-First we start by checking if the k3d command is available. If it is not, we print an error message and exit the script.
+Check if the k3d command is available. 
+
+```shell show_output=false
+command -v k3d
+```
+
+If not, print an error message and exit the script.
 
 ```yaml instacli
-Shell: command -v k3d
 On error:
   Print: |
     Please install k3d before running this script
@@ -26,12 +31,18 @@ Confirm: Are you sure you want to delete the k3d cluster?
 
 ## Actual deletion
 
-Now we are ready to delete the k3d cluster. We do this by running the `k3d cluster delete` command.
+Now we are ready to delete the k3d cluster.
 
 ```yaml instacli
 Print: Deleting k3d cluster
-Shell: k3d cluster delete xlrcluster
 ```
+
+We do this by running the `k3d cluster delete` command.
+
+```shell show_output=false
+k3d cluster delete democluster
+```
+
 Finally, we print a message to confirm that the cluster has been deleted.
 
 ```yaml instacli

@@ -2,6 +2,10 @@
 
 Configure Release to connect to ArgoCD.
 
+```yaml instacli
+Print: Configuring Release for ArgoCD
+```
+
 ## Get credentials
 
 We use default credentials to connect to ArgoCD. 
@@ -25,6 +29,7 @@ Script info:
 
 Use `xl` to configure the Release server using the yaml file [release-argo-config.yaml](release-argo-config.yaml). Connection details are passed using the `--values` option.
 
-```shell
+```shell show_output=false
 ./xlw apply -f setup/argo/release-argo-config.yaml --values argoCdServerUrl=${ARGO_URL} --values argoCdUsername=${ARGO_USERNAME} --values argoCdPassword=${ARGO_PASSWORD}
 ```
+
