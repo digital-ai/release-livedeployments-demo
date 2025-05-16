@@ -29,8 +29,8 @@ RemoteRunnerReleaseName: k3d-runner
 
 Invoke `xl kube install` with this file. In combination with `--quick-setup` to use default settings and `--skip-prompts` to prevent user interaction, the installation is quick and easy.
 
-```shell cd=${SCRIPT_TEMP_DIR} show_output=false
-xl kube install --quick-setup --skip-prompts --answers answers.yaml
+```shell show_output=false
+./xlw kube install --quick-setup --skip-prompts --answers "${SCRIPT_TEMP_DIR}/answers.yaml"
 ```
 Print confirmation message when done.
 

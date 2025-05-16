@@ -30,7 +30,7 @@ Print: Spinning up k3d cluster 'democluster'
 Use `k3d cluster create` to create a new cluster on your local machine.
 
 ```shell show_output=false
-k3d cluster create democluster
+k3d cluster create democluster --network demo-network
 ```
 
 Finally, we print a message to confirm that the cluster has been created.

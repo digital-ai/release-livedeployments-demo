@@ -20,8 +20,8 @@ RemoteRunnerReleaseName: k3d-runner
 
 With this file you can run the `clean` command:
 
-```shell cd=${SCRIPT_TEMP_DIR} show_output=false
-xl kube clean --quick-setup --skip-prompts --answers answers.yaml
+```shell show_output=false
+./xlw kube clean --quick-setup --skip-prompts --answers "${SCRIPT_TEMP_DIR}/answers.yaml"
 ```
 
 ## Confirmation
