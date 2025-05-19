@@ -3,7 +3,7 @@ services:
     build: docker/xl-deploy
     #    build: docker/xl-deploy-from-zip
     ports:
-      - 4516:4516
+      - "4516:4516"
     environment:
       - ADMIN_PASSWORD=admin
       - ACCEPT_EULA=Y
@@ -14,7 +14,7 @@ services:
     build: docker/xl-release
     #    build: docker/xl-release-from-zip
     ports:
-      - 5516:5516
+      - "5516:5516"
     environment:
       - ADMIN_PASSWORD=admin
       - ACCEPT_EULA=Y
@@ -27,7 +27,7 @@ services:
     depends_on:
       - deploy
       - release
-    command: ["apply", "--verbose", "--detach", "--file", "/data/setup.yaml"]
+    command: [ "apply", "--verbose", "--detach", "--file", "/data/setup.yaml" ]
     volumes:
       - ./demo-scenario:/data:ro
     networks:
@@ -39,14 +39,15 @@ services:
       - setup
     environment:
       - RELEASE_RUNNER_RELEASE_URL=http://release:5516
-      - RELEASE_RUNNER_DOCKER_DOCKER_HOST=remote-runner
+      - RELEASE_RUNNER_DOCKER_DOCKER_HOST=172.28.0.10
       - PROJECT_NAME=release-remote-runner
       - VERSION=24.1.6
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp:/tmp
     networks:
-      - demo-network
+      demo-network:
+        ipv4_address: 172.28.0.10
 
   container-registry:
     image: registry:2
@@ -61,3 +62,6 @@ networks:
   demo-network:
     name: demo-network
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
