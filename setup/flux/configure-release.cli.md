@@ -30,10 +30,20 @@ Shell: kubectl config view --raw -o jsonpath={.users[0].user.client-key-data}
 As: ${client_key_data}
 ```
 
+```yaml instacli
+Shell: kubectl config view --raw -o jsonpath={.clusters[0].cluster.server}
+As: ${flux_url}
+```
+
+```yaml instacli
+Shell: echo "${flux_url}" | sed 's/0.0.0.0/host.k3d.internal/'
+As: ${flux_url}
+```
+
 ## Configure Release
 
 Use `xl` to configure the Release server. Use the `--values` option to pass the certificate and key data to the command.
 
 ```shell show_output=false
-./xlw apply -f setup/flux/release-flux-config.yaml --values fluxUrl=https://kubernetes.default.svc --values fluxCertificate=${client_certificate_data} --values fluxKey=${client_key_data}
+./xlw apply -f setup/flux/release-flux-config.yaml --values fluxUrl=${flux_url} --values fluxCertificate=${client_certificate_data} --values fluxKey=${client_key_data}
 ```

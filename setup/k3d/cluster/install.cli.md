@@ -16,8 +16,9 @@ If not, print an error message and exit the script.
 On error:
   Print: |
     Please install k3d before running this script
-    
-    Install command:  brew install k3d
+
+    Install command (macos):  brew install k3d
+    Install command (linux):  curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
   Exit: 1
 ```
 
