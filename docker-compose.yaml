@@ -39,17 +39,15 @@ services:
       - setup
     environment:
       - RELEASE_RUNNER_RELEASE_URL=http://release:5516
-      # runner created docker images are not on the same network as the runner
-      # we need to assign a specific IP so that docker images can ping back the runner
-      - RELEASE_RUNNER_DOCKER_DOCKER_HOST=172.28.0.10
+      - RELEASE_RUNNER_DOCKER_DOCKER_HOST=remote-runner
+      - RELEASE_RUNNER_DOCKER_RUN_ON_SAME_NETWORK=true
       - PROJECT_NAME=release-remote-runner
       - VERSION=24.1.6
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp:/tmp
     networks:
-      demo-network:
-        ipv4_address: 172.28.0.10
+      - demo-network
 
   container-registry:
     image: registry:2
@@ -64,8 +62,3 @@ networks:
   demo-network:
     name: demo-network
     driver: bridge
-    ipam:
-      config:
-        - subnet: 172.28.0.0/16
-          # gateway IP is needed for kubernetes cluster to connect to the network
-          gateway: 172.28.0.1

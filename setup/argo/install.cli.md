@@ -55,3 +55,31 @@ Print: Spinning up ArgoCD on K3d cluster
 ```shell show_output=false show_command=true
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
+
+```yaml instacli
+Print: Waiting for ArgoCD server
+```
+
+```shell show_output=false
+kubectl wait --for=condition=available deployment/argocd-server -n argocd --timeout=300s
+```
+
+```yaml instacli
+Print: Patching ArgoCD server to NodePort
+```
+
+```shell show_output=false
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
+```
+
+```yaml instacli
+Print: Adding notification service
+```
+
+```shell show_output=false
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/notifications_catalog/install.yaml
+```
+
+```yaml instacli
+Print: ArgoCD server is up and running
+```
