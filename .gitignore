@@ -49,3 +49,8 @@ docker/xld/plugins
 secrets.xlvals
 deployit-license.lic
 xl-release-license.lic
+
+# xl cli
+digitalai
+xebialabs
+ziprepo
