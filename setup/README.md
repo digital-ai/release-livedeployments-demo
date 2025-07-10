@@ -15,12 +15,15 @@ Start by installing the k3d Kubernetes cluster.
 * Java 17 or higher
 * The `k3d` utility
 * The `flux` utility
+* The `kubectl` utility
 
 ## Setup
 
-For an interactive experience, use [Instacli](https://github.com/Hes-Siemelink/instacli). Launch Instacli by invoking the `./cli` command. This will download Instacli if not already present.
+For an interactive experience, use [Instacli](https://github.com/Hes-Siemelink/instacli). Launch Instacli by invoking the `./cli` command. This will download
+Instacli if not already present.
 
-If you can't run Instacli, just browse the markdown files in this directory and subdirectories. They contain detailed instructions and the same commands as the Instacli scripts. In fact, the markdown files *are* the Instacli scripts! 😲🤔
+If you can't run Instacli, just browse the markdown files in this directory and subdirectories. They contain detailed instructions and the same commands as the
+Instacli scripts. In fact, the markdown files *are* the Instacli scripts! 😲🤔
 
 Let's start from the top:
 
@@ -36,7 +39,7 @@ Configures the demo environment with ArgoCD, Flux and more.
 * Available commands: 
  > argo         Manages Argo CD installation and configuration
    flux         Manages Flux CD installation and configuration
-   k3d          Manages K3d cluster and runner
+   k3d          Manages K3d cluster
    quickstart   Guides you through setting up all the components.
 ```
 
@@ -45,12 +48,6 @@ The `quickstart` option will walk you through the setup of all components in the
 ## Helpful commands
 
 Here are some commands that might be helpful to run:
-
-Setting up the runner in k3d:
-
-```shell
-./cli setup k3d cluster runner install
-```
 
 Removing the k3d cluster with everything in it:
 
