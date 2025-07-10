@@ -8,7 +8,6 @@ Start by installing the k3d Kubernetes cluster.
 - [k3d-cluster](k3d/cluster) - K3d - Lightweight Kubernetes in Docker - https://k3d.io
 - [flux](flux) - Flux CD - GitOps for Kubernetes - https://fluxcd.io/
 - [argo](argo) - ArgoCD - Declarative GitOps CD for Kubernetes - https://argo-cd.readthedocs.io/en/stable/
-- [runner](k3d/runner) - Digital.ai Release Runner
 
 ## Prerequisites
 

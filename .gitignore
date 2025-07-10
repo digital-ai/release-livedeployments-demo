@@ -54,10 +54,3 @@ xl-release-license.lic
 xebialabs
 digitalai
 ziprepo
-
-# Possible leftover from a failed build
-/release-runner/
-/release-fluxcd-integration/
-/release-argocd-integration/
-/release-xld-integration/
-/release-k8s-integration/

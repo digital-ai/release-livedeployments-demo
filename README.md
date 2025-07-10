@@ -11,11 +11,11 @@ This repository contains demo for Digital.ai Release and Deploy live deployments
 
 ## Start & stop
 
-To start Release and Deploy in docker:
+To start the entire demo, including setup:
 
     ./up.sh
 
-To tear down Release and Deploy:
+To tear down the entire demo:
 
     ./down.sh
 
