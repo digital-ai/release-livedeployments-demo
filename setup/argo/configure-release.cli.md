@@ -39,9 +39,9 @@ Use `xl` to configure the Release server using the yaml file [release-argo-confi
 ```
 
 ```yaml instacli
-Print: | 
+Print: |
   ArgoCD API server added to release. 
-  To get live deployment notifications save the YAML configuration from Live Deployments workflow into a file.
+  To get live deployment notifications, run Live Deployment setup for ArgoCD (instructions on how-to are in main README.md file) and save the YAML configuration from Live Deployments workflow into a file.
   After that run this command in terminal to apply it
   kubectl apply -n argocd -f notifications.yaml
 ```

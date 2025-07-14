@@ -22,6 +22,14 @@ spec:
       precondition: "${confirmDeployment}"
     - name: Deploy to DEV
       type: deploy.Deploy
+      failureHandler: |-
+        if (releaseVariables['attempt'] < 3):
+          releaseVariables['attempt'] = releaseVariables['attempt'] + 1
+          taskApi.retryTask(getCurrentTask().getId(), "Retrying task from failure handler.")
+        else:
+          taskApi.skipTask(getCurrentTask().getId(), "Skipped task from failure handler.")
+      taskFailureHandlerEnabled: true
+      taskRecoverOp: RUN_SCRIPT
       server: Local Deploy (Docker)
       deploymentApplication: Applications/Users/me/Acme-Backend
       deploymentVersion: "${version}"
@@ -100,7 +108,10 @@ spec:
   - type: xlrelease.BooleanVariable
     key: confirmDeployment
     label: Confirm deployments
-  defaultTargetFolder: ./
+  - type: xlrelease.IntegerVariable
+    key: attempt
+    requiresValue: false
+    showOnReleaseStart: false
 - template: Cloud-native test procedure
   phases:
     - phase: Performance test

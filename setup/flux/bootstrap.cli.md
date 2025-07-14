@@ -41,10 +41,13 @@ On error:
 
 ## Get user information
 
-You need a repository to work on. You can let Flux create a new one for you, or you can use an existing one.
-For the demo, it's best to fork the example repo https://github.com/jberta-agency04/release-fluxcd-demo
-
-You need to have a GitHub user and a personal access token. Make sure your token has `repo` scope (XXX Check this).
+```yaml instacli
+Print: |
+    You need a repository to work on. You can let Flux create a new one for you, or you can use an existing one.
+    For the demo, it's best to fork the example repo https://github.com/digital-ai/release-fluxcd-demo
+    
+    You need to have a GitHub user and a personal access token. Make sure your token has `repo` scope (XXX Check this).
+```
 
 ```yaml instacli
 Script info:
