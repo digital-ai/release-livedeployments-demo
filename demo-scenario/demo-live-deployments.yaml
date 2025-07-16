@@ -1,0 +1,8 @@
+---
+apiVersion: xl-release/v1
+kind: Release
+metadata:
+  home: Application Demo
+spec:
+  name: Add Live Deployments
+  template: Deploy setup live deployment
