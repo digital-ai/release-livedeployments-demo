@@ -16,10 +16,6 @@ spec:
   phases:
   - phase: DEV
     tasks:
-    - name: Ready for DEV?
-      type: xlrelease.GateTask
-      team: Release Admin
-      precondition: "${confirmDeployment}"
     - name: Deploy to DEV
       type: deploy.Deploy
       failureHandler: |-
@@ -43,10 +39,6 @@ spec:
     color: '#3d6c9e'
   - phase: TEST
     tasks:
-    - name: Ready for TEST?
-      type: xlrelease.GateTask
-      team: Release Admin
-      precondition: "${confirmDeployment}"
     - name: Deploy to TEST
       type: deploy.Deploy
       server: Local Deploy (Docker)
@@ -62,10 +54,6 @@ spec:
     color: '#498500'
   - phase: ACC
     tasks:
-    - name: Ready for ACC?
-      type: xlrelease.GateTask
-      team: Release Admin
-      precondition: "${confirmDeployment}"
     - name: Deploy to ACC
       type: deploy.Deploy
       server: Local Deploy (Docker)
@@ -81,10 +69,6 @@ spec:
     color: '#ff9e49'
   - phase: PROD
     tasks:
-    - name: Ready for PROD?
-      type: xlrelease.GateTask
-      team: Release Admin
-      precondition: "${confirmDeployment}"
     - name: Deploy to PROD
       type: deploy.Deploy
       server: Local Deploy (Docker)
@@ -105,9 +89,6 @@ spec:
     description: Version of the application to deploy. Auto-complete is supported
       in this field.
     value: "1.0"
-  - type: xlrelease.BooleanVariable
-    key: confirmDeployment
-    label: Confirm deployments
   - type: xlrelease.IntegerVariable
     key: attempt
     requiresValue: false
