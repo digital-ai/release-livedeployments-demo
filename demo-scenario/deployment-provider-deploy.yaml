@@ -3,6 +3,6 @@ kind: Templates
 spec:
   - name: Local Deploy (Docker)
     type: digitalai.DeployServer
-    url: http://host.docker.internal:4516
+    url: http://deploy:4516/
     username: admin
     password: admin

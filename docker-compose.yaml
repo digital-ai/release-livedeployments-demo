@@ -1,44 +1,53 @@
 services:
   deploy:
     build: docker/xl-deploy
-#    build: docker/xl-deploy-from-zip
+    #    build: docker/xl-deploy-from-zip
     ports:
-    - 4516:4516
+      - "4516:4516"
     environment:
-    - ADMIN_PASSWORD=admin
-    - ACCEPT_EULA=Y
+      - ADMIN_PASSWORD=admin
+      - ACCEPT_EULA=Y
+    networks:
+      - demo-network
 
   release:
     build: docker/xl-release
-#    build: docker/xl-release-from-zip
+    #    build: docker/xl-release-from-zip
     ports:
-    - 5516:5516
+      - "5516:5516"
     environment:
-    - ADMIN_PASSWORD=admin
-    - ACCEPT_EULA=Y
-    - SERVER_URL=http://release:5516
+      - ADMIN_PASSWORD=admin
+      - ACCEPT_EULA=Y
+      - SERVER_URL=http://release:5516
+    networks:
+      - demo-network
 
   setup:
     build: demo-scenario
     depends_on:
       - deploy
       - release
-    command: ["apply", "--verbose", "--detach", "--file", "/data/setup.yaml"]
+    command: [ "apply", "--verbose", "--detach", "--file", "/data/setup.yaml" ]
     volumes:
       - ./demo-scenario:/data:ro
+    networks:
+      - demo-network
 
   remote-runner:
     build: docker/remote-runner
     depends_on:
       - setup
     environment:
-      - RELEASE_RUNNER_RELEASE_URL=http://localhost:5516
+      - RELEASE_RUNNER_RELEASE_URL=http://release:5516
+      - RELEASE_RUNNER_DOCKER_DOCKER_HOST=remote-runner
+      - RELEASE_RUNNER_DOCKER_RUN_ON_SAME_NETWORK=true
       - PROJECT_NAME=release-remote-runner
       - VERSION=24.1.6
-    network_mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp:/tmp
+    networks:
+      - demo-network
 
   container-registry:
     image: registry:2
@@ -46,3 +55,10 @@ services:
       - "5050:5000"
     volumes:
       - .:/var/lib/registry
+    networks:
+      - demo-network
+
+networks:
+  demo-network:
+    name: demo-network
+    driver: bridge

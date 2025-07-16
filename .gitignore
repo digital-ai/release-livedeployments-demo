@@ -50,7 +50,7 @@ secrets.xlvals
 deployit-license.lic
 xl-release-license.lic
 
-# xl cli
-digitalai
+# xl kube install
 xebialabs
+digitalai
 ziprepo
