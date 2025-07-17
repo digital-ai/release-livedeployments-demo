@@ -16,7 +16,11 @@ manually install the demo application to ArgoCD.
 Print: Installing demo application to ArgoCD
 ```
 
-```shell
+```shell show_output=false
+kubectl create namespace podinfo
+```
+
+```shell show_output=false
 kubectl apply -n argocd -f setup/argo/podinfo-app.yaml
 ```
 

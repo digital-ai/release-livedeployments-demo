@@ -26,13 +26,15 @@ Use `kubectl` to install ArgoCD in the k3d cluster. The command will install Arg
 Print: Spinning up ArgoCD on K3d cluster
 ```
 
-```shell show_output=false show_command=true
+```shell show_output=false
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
 
 ```yaml instacli
 Print: Waiting for ArgoCD server
 ```
+
+Wait for two usually the longest taking deployments
 
 ```shell show_output=false
 kubectl wait --for=condition=available deployment/argocd-dex-server -n argocd --timeout=300s
