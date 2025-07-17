@@ -27,6 +27,12 @@ Set admin password: {}
 As: ${password}
 ```
 
+## Install demo application to ArgoCD
+
+```yaml instacli
+Run script: install-demo-app.cli.md
+```
+
 ## Configure Release
 
 Configure Digital.ai Release connection to ArgoCD

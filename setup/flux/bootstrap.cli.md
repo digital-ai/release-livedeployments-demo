@@ -7,16 +7,8 @@ The repository doesn't need to exist yet, it will be created if it doesn't.
 
 ### 1. Local k3d cluster
 
-Make sure `kubectl` is connected to our k3d cluster.
-
-```shell
-kubectl config current-context
-```
-
-Should print:
-
-```output
-k3d-democluster
+```yaml instacli
+Run script: ../prerequisites/check-kubectl.cli.md
 ```
 
 ### 2. Flux command
