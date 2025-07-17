@@ -4,16 +4,8 @@ Configure Release to connect to FluxCD.
 
 ## Prerequisites
 
-Make sure `kubectl` is connected to our k3d cluster.
-
-```shell
-kubectl config current-context
-```
-
-should give you the following output:
-
-```output
-k3d-democluster
+```yaml instacli
+Run script: ../prerequisites/check-kubectl.cli.md
 ```
 
 ## Get credentials

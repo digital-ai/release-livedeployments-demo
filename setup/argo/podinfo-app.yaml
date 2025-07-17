@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: podinfo
+spec:
+  destination:
+    namespace: podinfo
+    server: https://kubernetes.default.svc
+  source:
+    path: kustomize
+    repoURL: https://github.com/stefanprodan/podinfo
+    targetRevision: HEAD
+  sources: []
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+      - PruneLast=true
