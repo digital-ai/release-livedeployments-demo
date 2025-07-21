@@ -17,11 +17,11 @@ Print: Installing demo application to ArgoCD
 ```
 
 ```shell show_output=false
-kubectl create namespace podinfo
+kubectl create namespace guestbook
 ```
 
 ```shell show_output=false
-kubectl apply -n argocd -f setup/argo/podinfo-app.yaml
+kubectl apply -n argocd -f setup/argo/guestbook-app.yaml
 ```
 
 ```yaml instacli
@@ -30,7 +30,7 @@ Print: Waiting for demo application to be ready
 
 ```shell show_output=false
 sleep 15
-kubectl wait --for=condition=available deployment/podinfo -n podinfo --timeout=300s
+kubectl wait --for=condition=available deployment/kustomize-guestbook-ui -n guestbook --timeout=300s
 ```
 
 ```yaml instacli

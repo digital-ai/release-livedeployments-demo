@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: podinfo
+  name: guestbook
 spec:
   destination:
-    namespace: podinfo
+    namespace: guestbook
     server: https://kubernetes.default.svc
   source:
-    path: kustomize
-    repoURL: https://github.com/stefanprodan/podinfo
+    path: kustomize-guestbook
+    repoURL: https://github.com/argoproj/argocd-example-apps
     targetRevision: HEAD
   sources: []
   project: default
