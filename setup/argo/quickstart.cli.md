@@ -6,7 +6,9 @@ Installs ArgoCD and configures Release.
 ## User confirmation
 
 ```yaml instacli
-Confirm: Set up ArgoCD?
+Confirm: |
+  Set up ArgoCD?
+  Note: Make sure to setup kubernetes first.
 ```
 
 ## Install ArgoCD
@@ -40,6 +42,14 @@ Configure Digital.ai Release connection to ArgoCD
 ```yaml instacli
 Configure release:
   password: ${password}
+```
+
+## Configure Release Live Deployments
+
+Configure Digital.ai Release Live Deployments to use ArgoCD
+
+```yaml instacli
+Run script: configure-live-deployment.cli.md
 ```
 
 ## Error handling
