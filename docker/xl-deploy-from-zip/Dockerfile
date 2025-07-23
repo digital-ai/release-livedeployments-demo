@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17
+FROM eclipse-temurin:21
 RUN apt-get update && apt-get install -y unzip
 COPY xl-deploy-*.zip /opt/
 RUN unzip opt/xl-deploy-*.zip -d /opt/

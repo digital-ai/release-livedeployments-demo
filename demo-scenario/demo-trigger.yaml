@@ -1,0 +1,27 @@
+---
+apiVersion: xl-release/v1
+kind: Templates
+metadata:
+  home: Application Demo
+spec:
+  - name: Demo Deployment Event Trigger
+    type: webhook.StatusWebhookTrigger
+    description: Demo trigger that will start a test release when deployment is done
+      to deploy
+    mappedProperties:
+      - type: xlrelease.StringValue
+        targetProperty: releaseTitle
+        value: Release started by trigger
+      - type: xlrelease.StringValue
+        targetProperty: template
+        value: Release to be used by trigger
+      - type: xlrelease.StringValue
+        targetProperty: releaseFolder
+        value: ./
+    triggerActionType: xlrelease.CreateReleaseFromTemplateAction
+    endpoint: Local Deploy (Docker) - Event source
+    applicationTitle: Acme-Backend
+    environmentTitle: ACC
+    applicationVersion: '*'
+    deploymentStatuses:
+      - done

@@ -2,12 +2,12 @@
 
 This repository contains demo for Digital.ai Release and Deploy live deployments.
 
-## Perequisites
+## Prerequisites
 
 * Docker
 * `host.docker.internal` in `/etc/hosts` pointing to `127.0.0.1`
 * `host.k3d.internal` in `/etc/hosts` pointing to `127.0.0.1`
-* create `secret.xlvals` file and fill in credentials, see `secret.xlvals.example`
+* Ports `4516`, `5516` and `5050` to be free on the host machine
 
 ## Start & stop
 
