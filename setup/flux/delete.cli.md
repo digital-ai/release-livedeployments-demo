@@ -6,16 +6,8 @@ Removes the flux cluster from your local machine and all the apps created by it
 
 ### 1. Local k3d cluster
 
-Make sure `kubectl` is connected to our k3d cluster.
-
-```shell
-kubectl config current-context
-```
-
-Should print:
-
-```output
-k3d-democluster
+```yaml instacli
+Run script: ../prerequisites/check-kubectl.cli.md
 ```
 
 ### 2. Flux command
