@@ -1,11 +1,11 @@
-# Configure Release for Flux
+# Configure Release for kubernetes
 
-Configure Release to connect to FluxCD.
+Configure Release to connect to kubernetes.
 
 ## Prerequisites
 
 ```yaml instacli
-Run script: ../prerequisites/check-kubectl.cli.md
+Run script: ../../prerequisites/check-kubectl.cli.md
 ```
 
 ## Get credentials
@@ -29,5 +29,5 @@ The https://k3d-democluster-server-0 is used because it is an Docker container n
 The port 6443 is the default port for the Kubernetes API server
 
 ```shell show_output=false
-./xlw apply -f setup/flux/release-flux-config.yaml --values fluxUrl=https://k3d-democluster-server-0:6443 --values fluxCertificate=${client_certificate_data} --values fluxKey=${client_key_data}
+./xlw apply -f setup/k3d/kubernetes/release-kube-config.yaml --values url=https://k3d-democluster-server-0:6443 --values clientCrt=${client_certificate_data} --values clientKey=${client_key_data}
 ```

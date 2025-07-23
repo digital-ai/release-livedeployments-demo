@@ -1,0 +1,10 @@
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+  - name: Kubernetes Server Connection
+    type: kubernetes.APIServer
+    url: !value url
+    k8sAuthenticationMethod: Client Certificate
+    insecure: true
+    clientCrt: !value clientCrt
+    clientKey: !value clientKey
