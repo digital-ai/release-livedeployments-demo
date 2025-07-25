@@ -13,22 +13,8 @@ Run script: ../prerequisites/check-kubectl.cli.md
 
 ### 2. Flux command
 
-You need to have the `flux` command installed on our local machine.
-
-```shell show_output=false
-command -v flux
-```
-
-If not, print an error message and exit the script.
-
 ```yaml instacli
-On error:
-  Print: |
-    Please install Flux before running this script
-
-    Install command (macos):  brew install fluxcd/tap/flux
-    Install command (linux):  curl -s https://fluxcd.io/install.sh | sudo bash
-  Exit: 1
+Run script: ../prerequisites/check-flux.cli.md
 ```
 
 ## Get user information
@@ -61,4 +47,10 @@ The `flux bootstrap` command is used to connect your local Flux installation to 
 
 ```shell show_command=true
 flux bootstrap github --owner=${GITHUB_USER} --repository=${GITHUB_REPO} --branch=main --personal --path=${output}
+```
+
+```yaml instacli
+Print: |
+  
+  FluxCD configured successfully.
 ```
