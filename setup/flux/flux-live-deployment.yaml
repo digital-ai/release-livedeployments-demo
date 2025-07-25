@@ -165,7 +165,7 @@ spec:
         key: liveDeploymentConfigurationApplication
         showOnReleaseStart: false
         label: Application
-        description: Application name in ArgoCD. You may enter a regular expression here.
+        description: Application name in FluxCD. You may enter a regular expression here.
         value: "*"
       - type: xlrelease.ListStringVariable
         key: liveDeploymentConfigurationNamespace
