@@ -18,6 +18,14 @@ Configure Digital.ai Release connection to Flux
 Run script: configure-release.cli.md
 ```
 
+## Configure Release Live Deployments
+
+Configure Digital.ai Release Live Deployments to use FluxCD
+
+```yaml instacli
+Run script: configure-live-deployment.cli.md
+```
+
 Error handling
 
 ```yaml instacli

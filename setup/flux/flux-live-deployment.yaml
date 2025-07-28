@@ -1,0 +1,191 @@
+---
+apiVersion: xl-release/v1
+kind: Templates
+metadata:
+  home: Application Demo
+spec:
+  - template: FluxCD setup live deployment
+    description: Create required connections for FluxCD deployment server
+    scheduledStartDate: 2024-08-28T09:00:00+02:00
+    dueDate: 2024-08-28T10:00:00+02:00
+    phases:
+      - phase: Setup Deployment Server
+        tasks:
+          - name: Test connection
+            type: xlrelease.ScriptTask
+            description: Test connection to deployment server.
+            script: |-
+              from java.lang import Throwable
+              
+              serverId = releaseVariables['server']
+              
+              statusResponse = configurationApi.checkStatus(serverId)
+              
+              if not statusResponse.success:
+                if "Cannot find active remote runner" in statusResponse.errorText:
+                  raise Exception("Failed to find active remote runner for executing container script.")
+                raise Exception(statusResponse.errorText)
+          - name: Configure Webhook For Release
+            type: xlrelease.ScriptTask
+            description: Creates required configuration items in Release for connection
+              to deployment server.
+            script: |-
+              from com.xebialabs.xlrelease.api.v1.forms import DeploymentServerSetup
+              from java.lang import Throwable
+              
+              folderId = getCurrentFolder().getId()
+              serverId = releaseVariables['server']
+              
+              deploymentServerSetup = DeploymentServerSetup(folderId, serverId)
+              
+              try:
+                statusWebhookEventSourceId = deploymentServerApi.setupDeploymentServer(deploymentServerSetup)
+                releaseVariables['statusWebhookEventSourceId'] = statusWebhookEventSourceId
+              except Throwable as e:
+                if "Cannot find active remote runner" in str(e):
+                  raise Exception("Failed to find active remote runner for executing container script.")
+                raise
+          - name: Configure Webhook for FluxCD
+            type: xlrelease.ScriptTask
+            description: Generates FluxCD config map required to enable live event notifications.
+            script: |-
+              from java.lang import Throwable
+              
+              try:
+                deploymentServerApi.autoconfigureDeploymentServer("${statusWebhookEventSourceId}")
+              except Throwable as e:
+                if "Cannot find active remote runner" in str(e):
+                  raise Exception("Failed to find active remote runner for executing container script.")
+                raise
+        color: "#3d6c9e"
+      - phase: Setup Live Deployment
+        tasks:
+          - name: Get configuration details
+            type: xlrelease.ScriptTask
+            description: Fetches details about target server.
+            script: |-
+              statusWebhookEventSource = configurationApi.getConfiguration("${statusWebhookEventSourceId}")
+              sourceServer = statusWebhookEventSource["sourceServer"]
+              
+              releaseVariables['targetServerTitle'] = sourceServer.title
+              releaseVariables['targetServerUrl'] = sourceServer.url
+              releaseVariables['statusWebhookEventSourceFolderId'] = statusWebhookEventSource.folderId
+              releaseVariables['liveDeploymentConfigurationName'] = sourceServer.title + " deployments"
+              
+              if "${liveDeploymentConfigurationId}":
+                liveDeploymentConfiguration = configurationApi.getConfiguration("${liveDeploymentConfigurationId}")
+                releaseVariables['liveDeploymentConfigurationName'] = liveDeploymentConfiguration.title
+                releaseVariables['liveDeploymentConfigurationKind'] = liveDeploymentConfiguration.kind
+                releaseVariables['liveDeploymentConfigurationApplication'] = liveDeploymentConfiguration.application
+                releaseVariables['liveDeploymentConfigurationNamespace'] = list(liveDeploymentConfiguration.namespace)
+          - name: Configure Live Deployment for Release
+            type: xlrelease.ScriptTask
+            description: "Configuring **${liveDeploymentConfigurationName}**"
+            script: |-
+              from com.xebialabs.xlrelease.domain import Configuration
+              from com.xebialabs.deployit.plugin.api.reflect import Type
+              from java.util import Set
+              
+              namespaces = Set.of(*[namespace for namespace in ${liveDeploymentConfigurationNamespace}])
+              
+              if "${liveDeploymentConfigurationId}":
+                liveDeploymentConfiguration = configurationApi.getConfiguration("${liveDeploymentConfigurationId}")
+                liveDeploymentConfiguration.title = "${liveDeploymentConfigurationName}"
+                liveDeploymentConfiguration.kind = "${liveDeploymentConfigurationKind}"
+                liveDeploymentConfiguration.application = "${liveDeploymentConfigurationApplication}"   
+                liveDeploymentConfiguration.namespace = namespaces
+              
+                configurationApi.updateConfiguration("${liveDeploymentConfigurationId}", liveDeploymentConfiguration)
+              else:
+                statusWebhookEventSource = configurationApi.getConfiguration("${statusWebhookEventSourceId}")
+              
+                liveDeploymentConfiguration = Configuration()
+                liveDeploymentConfiguration.type = Type.valueOf("fluxcd.DeploymentConfig")
+                liveDeploymentConfiguration.title = "${liveDeploymentConfigurationName}"
+                liveDeploymentConfiguration.folderId = "${statusWebhookEventSourceFolderId}"
+                liveDeploymentConfiguration.setProperty("kind", "${liveDeploymentConfigurationKind}")
+                liveDeploymentConfiguration.setProperty("application", "${liveDeploymentConfigurationApplication}")
+                liveDeploymentConfiguration.setProperty("namespace", namespaces)
+              
+                liveDeploymentConfiguration = configurationApi.addConfiguration(liveDeploymentConfiguration)
+              
+                liveDeploymentConfigs = statusWebhookEventSource.getProperty("liveDeploymentConfigs")
+                liveDeploymentConfigs.add(liveDeploymentConfiguration)
+              
+                statusWebhookEventSource.setProperty("liveDeploymentConfigs", liveDeploymentConfigs)
+              
+                configurationApi.updateConfiguration("${statusWebhookEventSourceId}", statusWebhookEventSource)
+          - name: Patch FluxCD applications
+            type: xlrelease.ScriptTask
+            description: |-
+              Patches FluxCD applications by running a container script, adding the necessary annotation to enable live event notifications.
+            script: |-
+              from java.lang import Throwable
+              
+              try:
+                deploymentServerApi.patchDeploymentServer("${statusWebhookEventSourceId}")
+              except Throwable as e:
+                if "Cannot find active remote runner" in str(e):
+                  raise Exception("Failed to find active remote runner for executing container script.")
+                raise
+        color: '#3d6c9e'
+    variables:
+      - type: xlrelease.StringVariable
+        key: statusWebhookEventSourceId
+        requiresValue: false
+        showOnReleaseStart: false
+      - type: xlrelease.StringVariable
+        key: liveDeploymentConfigurationId
+        requiresValue: false
+      - type: xlrelease.ReferenceVariable
+        key: server
+        requiresValue: false
+        showOnReleaseStart: false
+        label: FluxCD server
+        referencedType: fluxcd.APIServer
+        value: FluxCD Server Connection
+      - type: xlrelease.StringVariable
+        key: liveDeploymentConfigurationName
+        showOnReleaseStart: false
+        label: Configuration name
+        description: The name of live deployment configuration
+      - type: xlrelease.StringVariable
+        key: liveDeploymentConfigurationKind
+        showOnReleaseStart: false
+        label: Kind
+        description: Kind for the application in FluxCD.
+        valueProvider:
+          type: xlrelease.ListOfStringValueProviderConfiguration
+          values:
+            - "HelmRelease"
+            - "Kustomization"
+            - "All Kinds"
+        value: "All Kinds"
+      - type: xlrelease.StringVariable
+        key: liveDeploymentConfigurationApplication
+        showOnReleaseStart: false
+        label: Application
+        description: Application name in FluxCD. You may enter a regular expression here.
+        value: "*"
+      - type: xlrelease.ListStringVariable
+        key: liveDeploymentConfigurationNamespace
+        showOnReleaseStart: false
+        label: Namespace
+        description: Namespace for the application in FluxCD. You may enter multiple namespaces here.
+        value:
+          - "podinfo"
+          - "capacitor"
+      - type: xlrelease.StringVariable
+        key: targetServerTitle
+        requiresValue: false
+        showOnReleaseStart: false
+      - type: xlrelease.StringVariable
+        key: targetServerUrl
+        requiresValue: false
+        showOnReleaseStart: false
+      - type: xlrelease.StringVariable
+        key: statusWebhookEventSourceFolderId
+        requiresValue: false
+        showOnReleaseStart: false
+    scriptUsername: admin
+    scriptUserPassword: admin
