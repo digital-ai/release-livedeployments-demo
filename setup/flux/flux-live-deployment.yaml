@@ -128,6 +128,12 @@ spec:
                 if "Cannot find active remote runner" in str(e):
                   raise Exception("Failed to find active remote runner for executing container script.")
                 raise
+            failureHandler: |-
+              if (releaseVariables['attempt'] < 3):
+                releaseVariables['attempt'] = releaseVariables['attempt'] + 1
+                taskApi.retryTask(getCurrentTask().getId(), "Retrying task from failure handler.")
+              else:
+                taskApi.skipTask(getCurrentTask().getId(), "Skipped task from failure handler.")
         color: '#3d6c9e'
     variables:
       - type: xlrelease.StringVariable
@@ -185,6 +191,10 @@ spec:
         showOnReleaseStart: false
       - type: xlrelease.StringVariable
         key: statusWebhookEventSourceFolderId
+        requiresValue: false
+        showOnReleaseStart: false
+      - type: xlrelease.IntegerVariable
+        key: attempt
         requiresValue: false
         showOnReleaseStart: false
     scriptUsername: admin
