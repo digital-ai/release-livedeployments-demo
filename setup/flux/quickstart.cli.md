@@ -6,10 +6,25 @@ Set up of all the components in one go.
 Confirm: Set up FluxCD?
 ```
 
-Install Flux
+```yaml instacli
+Prompt:
+  description: |
+    Do you want to use manual setup or automated?
+        * Automated will create a Flux environment with demo app without using a GitHub repository
+        * Manual will need GitHub repo and GitHub user data provided for bootstrapping
+  enum:
+    - Automated
+    - Manual
+```
 
 ```yaml instacli
-Run script: bootstrap.cli.md
+If:
+  item: ${output}
+  equals: Manual
+  then:
+    Run script: bootstrap.cli.md
+  else:
+    Run script: install-auto.cli.md
 ```
 
 Configure Digital.ai Release connection to Flux

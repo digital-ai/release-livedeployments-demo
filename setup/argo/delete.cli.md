@@ -27,3 +27,7 @@ Then clean up the namespace
 ```shell
 kubectl delete namespace argocd
 ```
+
+```shell
+kubectl delete namespace guestbook
+```

@@ -4,5 +4,5 @@ kind: Release
 metadata:
   home: Application Demo
 spec:
-  name: Add Live Deployments
+  name: Add FluxCD Live Deployments
   template: FluxCD setup live deployment
