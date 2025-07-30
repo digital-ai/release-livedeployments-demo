@@ -4,5 +4,5 @@ kind: Release
 metadata:
   home: Application Demo
 spec:
-  name: Add Live Deployments
+  name: Add ArgoCD Live Deployments
   template: ArgoCD setup live deployment
