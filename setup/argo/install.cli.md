@@ -37,11 +37,16 @@ Print: Waiting for ArgoCD server
 Wait for two usually the longest taking deployments
 
 ```shell show_output=false
+sleep 15
 kubectl wait --for=condition=available deployment/argocd-dex-server -n argocd --timeout=300s
 ```
 
 ```shell show_output=false
 kubectl wait --for=condition=available deployment/argocd-redis -n argocd --timeout=300s
+```
+
+```shell show_output=false
+kubectl wait --for=condition=available deployment/argocd-server -n argocd --timeout=300s
 ```
 
 ```yaml instacli
