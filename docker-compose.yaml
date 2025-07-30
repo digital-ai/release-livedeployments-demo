@@ -1,7 +1,6 @@
 services:
   deploy:
-    build: docker/xl-deploy
-    #    build: docker/xl-deploy-from-zip
+    build: "${DEPLOY_DOCKER_PATH}"
     ports:
       - "4516:4516"
     environment:
@@ -11,8 +10,7 @@ services:
       - demo-network
 
   release:
-    build: docker/xl-release
-    #    build: docker/xl-release-from-zip
+    build: "${RELEASE_DOCKER_PATH}"
     ports:
       - "5516:5516"
     environment:
