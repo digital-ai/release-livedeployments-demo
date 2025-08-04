@@ -6,7 +6,3 @@ metadata:
     - deploy-setup.yaml
     - release-setup.yaml
     - demo-deployments.yaml
-    - deploy-live-deployment.yaml
-    - demo-live-deployments.yaml
-    - demo-trigger.yaml
-

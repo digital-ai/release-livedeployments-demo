@@ -27,7 +27,7 @@ services:
     depends_on:
       - deploy
       - release
-    command: [ "apply", "--verbose", "--file", "/data/setup.yaml" ]
+    command: /data/run-commands.sh
     volumes:
       - ./demo-scenario:/data:ro
     networks:
