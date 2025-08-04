@@ -17,4 +17,4 @@ VOLUME "/data"
 COPY config.yaml /.xebialabs/config.yaml
 RUN xl version
 
-ENTRYPOINT ["/usr/local/bin/wait-for", "-t", "600", "deploy:4516", "--", "/usr/local/bin/wait-for", "-t", "600", "release:5516", "--", "/usr/local/bin/xl"]
+ENTRYPOINT ["/usr/local/bin/wait-for", "-t", "600", "deploy:4516", "--", "/usr/local/bin/wait-for", "-t", "600", "release:5516", "--" ]
