@@ -32,7 +32,10 @@ services:
       - demo-network
 
   remote-runner:
-    build: docker/remote-runner
+    build:
+      context: docker/remote-runner
+      args:
+        RUNNER_DOCKER_IMAGE: ${RUNNER_DOCKER_IMAGE}
     depends_on:
       - setup
     environment:
