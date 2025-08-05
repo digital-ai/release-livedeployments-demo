@@ -19,6 +19,22 @@ To tear down the entire demo:
 
     ./down.sh
 
+## Using release and deploy from zip
+
+You can use custom versions of Release and Deploy by providing arguments to the `up.sh` script. For example:
+
+```
+--release-zip <path_to_release_zip>
+--deploy-zip <path_to_deploy_zip>
+```
+
+Note: don't forget to add license files to the `xl-deploy-from-zip` and `xl-release-from-zip` folders in the `docker` directory.
+
+## Using custom versions of Release, Deploy and Release Runner
+
+You can manually configure which versions of Release, Deploy and Release Runner to use by editing the `Dockerfile` files of the corresponding services in the
+`docker` directory. Simply change the `FROM` line to point to the desired version of the service.
+
 ## Setting up Live Deployments manually
 
 If you want to set up the live deployments manually, follow these steps:
