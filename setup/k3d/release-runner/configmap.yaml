@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: remote-runner-config
+data:
+  RELEASE_RUNNER_RELEASE_URL: "http://release:5516"
+  RELEASE_RUNNER_DOCKER_DOCKER_HOST: "remote-runner"
+  PROJECT_NAME: "release-remote-runner"
+  VERSION: "24.1.6"

@@ -32,6 +32,8 @@ services:
       - demo-network
 
   remote-runner:
+    profiles:
+      - runner-in-docker
     build:
       context: docker/remote-runner
       args:

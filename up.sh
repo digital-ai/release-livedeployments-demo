@@ -11,6 +11,12 @@ parse_arguments() {
             current_flag="$1"
             state="read-value"
             ;;
+          --runner-in-kubernetes)
+            START_RUNNER_IN_DOCKER=false
+            ;;
+          --help|-h)
+            SHOW_HELP=true
+            ;;
           *)
             echo "Unknown option: $1"
             exit 1
@@ -53,6 +59,8 @@ DEPLOY_ZIP=''
 RELEASE_ZIP=''
 DEPLOY_DOCKER_PATH='docker/xl-deploy'
 RELEASE_DOCKER_PATH='docker/xl-release'
+START_RUNNER_IN_DOCKER=true
+SHOW_HELP=false
 
 # Extract default runner image from Dockerfile so we don't hardcode it in multiple places
 DEFAULT_RUNNER_IMAGE=$(grep "ARG RUNNER_DOCKER_IMAGE=" docker/remote-runner/Dockerfile | cut -d= -f2)
@@ -66,8 +74,16 @@ echo "If you don't provide a zip, the docker-compose will use the default images
 echo ""
 echo "You can also provide a custom Runner to use with the following option:"
 echo "  --runner-docker-image <docker_image_name>"
+echo ""
+echo "If you want to start runner in kubernetes, you can use the following command:"
+echo "  --runner-in-kubernetes"
+echo "this command will not start the runner in docker, it will need to be started in kubernetes using ./cli setup command"
 
 parse_arguments "$@"
+
+if [[ $SHOW_HELP == true ]]; then
+  exit 0
+fi
 
 if [[ -n "$RELEASE_ZIP" ]]; then
   echo "Using Release zip: $RELEASE_ZIP"
@@ -86,10 +102,21 @@ fi
 echo ""
 echo ""
 echo "Spinning up dockerized Release and Deploy"
+
+# Build compose command with conditional profile
+COMPOSE_CMD="docker compose -f docker-compose.yaml"
+if [[ $START_RUNNER_IN_DOCKER == true ]]; then
+  COMPOSE_CMD="$COMPOSE_CMD --profile runner-in-docker"
+else
+  echo "Runner will not be started in Docker, it will need to be started in Kubernetes."
+fi
+
+echo "Using docker compose command: $COMPOSE_CMD"
+
 RELEASE_DOCKER_PATH=$RELEASE_DOCKER_PATH \
 DEPLOY_DOCKER_PATH=$DEPLOY_DOCKER_PATH \
 RUNNER_DOCKER_IMAGE=$RUNNER_DOCKER_IMAGE \
-docker compose -f docker-compose.yaml up -d --build
+$COMPOSE_CMD up -d --build
 echo "Please wait for the Release and Deploy to start up..."
 
 echo "See setup/README.md to install additional components like ArgoCD and Flux."

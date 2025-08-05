@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: remote-runner
+  namespace: runner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: remote-runner
+  template:
+    metadata:
+      labels:
+        app: remote-runner
+    spec:
+      containers:
+        - name: remote-runner
+#          image: ${RUNNER_DOCKER_IMAGE}
+          image: xebialabsunsupported/release-runner:25.3.0-beta.701
+          env:
+            - name: RELEASE_RUNNER_RELEASE_URL
+              value: "http://release:5516"
+            - name: RELEASE_RUNNER_DOCKER_DOCKER_HOST
+              value: "remote-runner"
+            - name: PROJECT_NAME
+              value: "release-remote-runner"
+            - name: VERSION
+              value: "24.1.6"
+            - name: RELEASE_RUNNER_PROFILE
+              value: "k8s"
+          volumeMounts:
+            - name: docker-sock
+              mountPath: /var/run/docker.sock
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+        - name: tmp
+          hostPath:
+            path: /tmp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: remote-runner
+spec:
+  selector:
+    app: remote-runner
+  ports:
+    - port: 8686
+      targetPort: 8686

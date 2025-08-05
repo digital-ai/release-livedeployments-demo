@@ -1,4 +1,4 @@
-ARG RUNNER_DOCKER_IMAGE="xebialabsunsupported/release-runner:25.3.0-beta.715"
+ARG RUNNER_DOCKER_IMAGE=xebialabsunsupported/release-runner:25.3.0-beta.715
 
 FROM ${RUNNER_DOCKER_IMAGE}
 
