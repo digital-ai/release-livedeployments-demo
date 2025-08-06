@@ -70,11 +70,16 @@ fi
 
 echo ""
 echo ""
-echo "Spinning up dockerized Release and Deploy"
-RELEASE_DOCKER_PATH=$RELEASE_DOCKER_PATH \
-DEPLOY_DOCKER_PATH=$DEPLOY_DOCKER_PATH \
-docker compose -f docker-compose.yaml up -d --build
-echo "Please wait for the Release and Deploy to start up..."
+echo "Spinning up Release and Deploy in Docker"
+export RELEASE_DOCKER_PATH=$RELEASE_DOCKER_PATH
+export DEPLOY_DOCKER_PATH=$DEPLOY_DOCKER_PATH
 
-echo "See setup/README.md to install additional components like ArgoCD and Flux."
-echo "$ ./cli setup    # Interactive setup with Instacli: - https://github.com/Hes-Siemelink/instacli"
+docker compose -f docker-compose.yaml up -d --build
+
+echo "
+Please wait for the Release and Deploy servers to start up.
+Tip: the services are available when the setup-1 container is no longer running."
+
+echo "
+To install additional components like ArgoCD and Flux, see setup/README.md or use the interactive CLI:
+$ ./cli setup"
