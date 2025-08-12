@@ -59,15 +59,6 @@ flux create kustomization podinfo \
 ```
 
 ```yaml instacli
-Print: Waiting for demo application to be ready
-```
-
-```shell show_output=false
-sleep 15
-kubectl wait --for=condition=available deployment/podinfo -n podinfo --timeout=300s
-```
-
-```yaml instacli
 Print: |
   
   FluxCD configured successfully.

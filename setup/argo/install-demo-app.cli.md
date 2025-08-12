@@ -25,14 +25,5 @@ kubectl apply -n argocd -f setup/argo/guestbook-app.yaml
 ```
 
 ```yaml instacli
-Print: Waiting for demo application to be ready
-```
-
-```shell show_output=false
-sleep 15
-kubectl wait --for=condition=available deployment/kustomize-guestbook-ui -n guestbook --timeout=300s
-```
-
-```yaml instacli
-Print: Demo application is up and running
+Print: Demo application will start in a few seconds
 ```

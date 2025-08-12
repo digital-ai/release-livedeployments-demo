@@ -93,6 +93,8 @@ spec:
     key: attempt
     requiresValue: false
     showOnReleaseStart: false
+  scriptUsername: admin
+  scriptUserPassword: admin
 - template: Cloud-native test procedure
   phases:
     - phase: Performance test
