@@ -1,6 +1,6 @@
 # Quickstart: All-in-one
 
-Guides you through setting up all the components.
+Setup of all needed components in one go
 
 ```yaml instacli
 Run script:

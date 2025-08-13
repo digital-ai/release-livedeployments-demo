@@ -1,6 +1,6 @@
 # K3d cluster setup
 
-Sets up K3d on local Docker
+Setup of all needed components in one go
 
 ```yaml instacli
 Confirm: Set up K3d?

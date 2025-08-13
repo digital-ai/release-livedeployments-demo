@@ -1,6 +1,6 @@
 # Flux CD setup
 
-Set up of all the components in one go.
+Setup of all needed components in one go
 
 ```yaml instacli
 Confirm: Set up FluxCD?

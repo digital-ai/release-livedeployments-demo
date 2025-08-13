@@ -74,7 +74,7 @@ echo "Spinning up Release and Deploy in Docker"
 export RELEASE_DOCKER_PATH=$RELEASE_DOCKER_PATH
 export DEPLOY_DOCKER_PATH=$DEPLOY_DOCKER_PATH
 
-docker compose -f docker-compose.yaml up -d --build
+docker compose -f docker-compose.yaml up -d --build || exit 1
 
 echo "
 Please wait for the Release and Deploy servers to start up.
