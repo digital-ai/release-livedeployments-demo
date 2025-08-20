@@ -4,7 +4,7 @@ Setup of all needed components in one go
 
 ```yaml instacli
 Run script:
-  - k3d/cluster/quickstart.cli.md
+  - k3d/quickstart.cli.md
   - argo/quickstart.cli.md
   - flux/quickstart.cli.md
 ```
