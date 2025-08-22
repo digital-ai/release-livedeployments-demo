@@ -5,7 +5,8 @@ Installs Argo CD in local k3d cluster
 ## Prerequisites
 
 ```yaml instacli
-Run script: ../prerequisites/check-kubectl.cli.md
+Check command:
+  name: kubectl
 ```
 
 ## Create namespace

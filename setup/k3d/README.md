@@ -1,6 +1,6 @@
 # K3d cluster setup
 
-Manages K3d cluster on your local Docker
+K3d cluster installation and configuration
 
 
   

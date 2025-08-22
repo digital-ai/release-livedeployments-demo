@@ -4,22 +4,9 @@ Spins up a k3d cluster on your local machine
 
 ## Prerequisites
 
-Check if the k3d command is available.
-
-```shell show_output=false
-command -v k3d
-```
-
-If not, print an error message and exit the script.
-
 ```yaml instacli
-On error:
-  Print: |
-    Please install k3d before running this script
-
-    Install command (macos):  brew install k3d
-    Install command (linux):  curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
-  Exit: 1
+Check command:
+  name: k3d
 ```
 
 ## Spin up cluster

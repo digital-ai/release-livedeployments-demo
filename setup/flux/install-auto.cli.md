@@ -4,16 +4,14 @@ Install FluxCD and creates demo applications automatically.
 
 ## Prerequisites
 
-### 1. Local k3d cluster
-
 ```yaml instacli
-Run script: ../prerequisites/check-kubectl.cli.md
+Check command:
+  name: kubectl
 ```
 
-### 2. Flux command
-
 ```yaml instacli
-Run script: ../prerequisites/check-flux.cli.md
+Check command:
+  name: flux
 ```
 
 ## Install flux
@@ -26,11 +24,11 @@ Print: Installing FluxCD
 flux install
 ```
 
+## Create podinfo namespace
+
 ```yaml instacli
 Print: Creating podinfo app
 ```
-
-## Create podinfo namespace
 
 ```shell show_output=false
 kubectl create namespace podinfo

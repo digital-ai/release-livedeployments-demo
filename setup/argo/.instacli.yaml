@@ -1,0 +1,2 @@
+imports:
+  - ../prerequisites/check-command.cli

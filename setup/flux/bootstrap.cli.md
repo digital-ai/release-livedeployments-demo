@@ -5,16 +5,18 @@ The repository doesn't need to exist yet, it will be created if it doesn't.
 
 ## Prerequisites
 
-### 1. Local k3d cluster
-
 ```yaml instacli
-Run script: ../prerequisites/check-kubectl.cli.md
+Check command:
+  name: kubectl
 ```
 
-### 2. Flux command
+```yaml instacli
+Check command:
+  name: flux
+```
 
 ```yaml instacli
-Run script: ../prerequisites/check-flux.cli.md
+Confirm: Are you sure you want to delete ArgoCD?
 ```
 
 ## Get user information

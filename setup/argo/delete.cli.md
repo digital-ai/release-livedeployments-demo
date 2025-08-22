@@ -5,7 +5,10 @@ Deletes ArgoCD from the k3d cluster.
 ## Prerequisites
 
 ```yaml instacli
-Run script: ../prerequisites/check-kubectl.cli.md
+Check command:
+  name: kubectl
+
+Confirm: Are you sure you want to delete ArgoCD?
 ```
 
 ## Uninstall ArgoCD

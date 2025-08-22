@@ -5,12 +5,13 @@ Installs the demo application to ArgoCD.
 ## Prerequisites
 
 ```yaml instacli
-Run script: ../prerequisites/check-kubectl.cli.md
+Check command:
+  name: kubectl
 ```
 
 ## Install demo application
 
-manually install the demo application to ArgoCD.
+Manually install the demo application to ArgoCD.
 
 ```yaml instacli
 Print: Installing demo application to ArgoCD

@@ -1,6 +1,4 @@
-# Prerequisites
-
-Checks if needed utilities are available
+Helper files for the instacli scripts.
 
 
   

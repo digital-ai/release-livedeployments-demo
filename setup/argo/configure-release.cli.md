@@ -51,7 +51,8 @@ Also configure release to connect to kubernetes. This is needed to easily apply 
 ## Prerequisites
 
 ```yaml instacli
-Run script: ../prerequisites/check-kubectl.cli.md
+Check command:
+  name: kubectl
 ```
 
 ## Get credentials
