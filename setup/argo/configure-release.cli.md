@@ -2,9 +2,7 @@
 
 Configure Release to connect to ArgoCD.
 
-```yaml instacli
-Print: Configuring Release for ArgoCD
-```
+> Configuring Release for ArgoCD
 
 ## Get credentials
 
@@ -38,11 +36,7 @@ Use `xl` to configure the Release server using the yaml file [release-argo-confi
 ./xlw apply -f setup/argo/release-argo-config.yaml --values argoCdServerUrl=${ARGO_URL}:${NODE_PORT} --values argoCdUsername=${ARGO_USERNAME} --values argoCdPassword=${ARGO_PASSWORD}
 ```
 
-```yaml instacli
-Print: |
-  
-  ArgoCD API server added to release.
-```
+> ArgoCD API server added to release.
 
 ## Configure Release for kubernetes
 

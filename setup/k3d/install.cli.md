@@ -11,26 +11,18 @@ Check command:
 
 ## Spin up cluster
 
-```yaml instacli
-Print: Spinning up k3d cluster 'democluster'
-```
+Create a new cluster `democluster` in the `demo-network` Docker network.
 
-Use `k3d cluster create` to create a new cluster on your local machine.
+> Spinning up k3d cluster 'democluster'
 
 ```shell show_output=false
 k3d cluster create democluster --network demo-network
 ```
 
-```yaml instacli
-Print: Waiting for k3d server
-```
+> Waiting for k3d server
 
 ```shell show_output=false
 kubectl wait --for=condition=Ready pod -l k8s-app=metrics-server -n kube-system --timeout=300s
 ```
 
-Finally, we print a message to confirm that the cluster has been created.
-
-```yaml instacli
-Print: Cluster created
-```
+> Cluster created

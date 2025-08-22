@@ -16,9 +16,7 @@ Check command:
 
 ## Install flux
 
-```yaml instacli
-Print: Installing FluxCD
-```
+> Installing FluxCD
 
 ```shell show_output=false
 flux install
@@ -26,9 +24,7 @@ flux install
 
 ## Create podinfo namespace
 
-```yaml instacli
-Print: Creating podinfo app
-```
+> Creating podinfo app
 
 ```shell show_output=false
 kubectl create namespace podinfo
@@ -56,8 +52,4 @@ flux create kustomization podinfo \
   --interval=5m
 ```
 
-```yaml instacli
-Print: |
-  
-  FluxCD configured successfully.
-```
+> FluxCD configured successfully.

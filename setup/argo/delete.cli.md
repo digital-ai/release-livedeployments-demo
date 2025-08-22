@@ -13,19 +13,15 @@ Confirm: Are you sure you want to delete ArgoCD?
 
 ## Uninstall ArgoCD
 
-Uninstall ArgoCD using the same manifest we installed it with
+> Removing ArgoCD from K3d cluster
 
-```yaml instacli
-Print: Removing ArgoCD from K3d cluster
-```
+Uninstall ArgoCD using the same manifest we installed it with
 
 ```shell show_output=false
 kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
 
-## Delete ArgoCD namespace
-
-Then clean up the namespace
+## Clean up ArgoCD namespaces
 
 ```shell
 kubectl delete namespace argocd

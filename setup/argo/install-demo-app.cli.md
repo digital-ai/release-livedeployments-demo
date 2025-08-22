@@ -11,11 +11,7 @@ Check command:
 
 ## Install demo application
 
-Manually install the demo application to ArgoCD.
-
-```yaml instacli
-Print: Installing demo application to ArgoCD
-```
+> Installing demo application to ArgoCD
 
 ```shell show_output=false
 kubectl create namespace guestbook
@@ -25,6 +21,4 @@ kubectl create namespace guestbook
 kubectl apply -n argocd -f setup/argo/guestbook-app.yaml
 ```
 
-```yaml instacli
-Print: Demo application will start in a few seconds
-```
+> Demo application will start in a few seconds

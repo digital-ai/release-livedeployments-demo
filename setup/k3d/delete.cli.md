@@ -13,9 +13,7 @@ Confirm: Are you sure you want to delete the k3d cluster?
 
 ## Actual deletion
 
-```yaml instacli
-Print: Deleting k3d cluster
-```
+> Deleting k3d cluster
 
 Use the following shell command to delete the cluster from your local machine:
 
@@ -23,6 +21,4 @@ Use the following shell command to delete the cluster from your local machine:
 k3d cluster delete democluster
 ```
 
-```yaml instacli
-Print: Cluster deleted
-```
+> Cluster deleted

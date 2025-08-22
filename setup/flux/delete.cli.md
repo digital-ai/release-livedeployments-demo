@@ -20,9 +20,7 @@ Confirm: Are you sure you want to delete the flux cluster?
 
 ## Actual deletion
 
-```yaml instacli
-Print: Deleting flux cluster
-```
+> Deleting flux cluster
 
 Remove flux with the following command:
 
@@ -30,6 +28,4 @@ Remove flux with the following command:
 flux uninstall --namespace=flux-system --silent
 ```
 
-```yaml instacli
-Print: Cluster deleted, please delete deployed apps manually
-```
+> Cluster deleted, please delete deployed apps manually
