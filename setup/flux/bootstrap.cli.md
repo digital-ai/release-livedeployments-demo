@@ -14,7 +14,7 @@ Check command:
   name: flux
 ```
 
-## Get user information
+## Connect to demo repo
 
 > You need a repository to work on. You can let Flux create a new one for you, or you can use an existing one.
 > For the demo, it's best to fork the example repo https://github.com/digital-ai/release-fluxcd-demo
@@ -34,12 +34,13 @@ Prompt:
   default: clusters/staging
 ```
 
-## Flux bootstrap command
+## Bootstrap flux
 
 The `flux bootstrap` command is used to connect your local Flux installation to a GitHub repository.
 
-```shell show_command=true
-flux bootstrap github --owner=${GITHUB_USER} --repository=${GITHUB_REPO} --branch=main --personal --path=${output}
+```yaml instacli
+Shell: |
+  flux bootstrap github --owner=${GITHUB_USER} --repository=${GITHUB_REPO} --branch=main --personal --path=${output}
 ```
 
 > FluxCD is now connected to your GitHub repository.

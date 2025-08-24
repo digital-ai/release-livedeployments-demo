@@ -13,12 +13,14 @@ Check command:
 
 > Installing demo application to ArgoCD
 
-```shell show_output=false
-kubectl create namespace guestbook
+```yaml instacli
+Shell: |
+  kubectl create namespace guestbook
 ```
 
-```shell show_output=false
-kubectl apply -n argocd -f setup/argo/guestbook-app.yaml
+```yaml instacli
+Shell: |
+  kubectl apply -n argocd -f setup/argo/guestbook-app.yaml
 ```
 
 > Demo application will start in a few seconds

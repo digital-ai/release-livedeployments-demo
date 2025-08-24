@@ -6,6 +6,8 @@ Setup of all needed components in one go
 Confirm: Set up FluxCD?
 ```
 
+## Bootstrap Flux
+
 ```yaml instacli
 Prompt:
   description: |
@@ -27,13 +29,13 @@ If:
     Run script: install-auto.cli.md
 ```
 
+## Configure Release
+
 Configure Digital.ai Release connection to Flux
 
 ```yaml instacli
 Run script: configure-release.cli.md
 ```
-
-## Configure Release Live Deployments
 
 Configure Digital.ai Release Live Deployments to use FluxCD
 

@@ -1,14 +1,14 @@
 # Sets ArgoCD admin password
-  
-Sets the admin password for ArgoCD. 
+
+Sets the admin password for ArgoCD.
 
 ## Configure ArgoCD with the admin password
-   
+
 To prepare the admin account, we need to create a yaml patch the contains the password hash and the timestamp.
 
 We use the shell to return the current date in the format `YYYY-MM-DDTHH:MM:SS+TZ`.
 
-We create a temporary file `${secret_patch}` that contains the password and the timestamp. 
+We create a temporary file `${secret_patch}` that contains the password and the timestamp.
 
 For now we use the default password `password` and send the hash in the patch.
 
@@ -29,8 +29,9 @@ As: ${secret_patch}
 ```
 
 We can apply the patch to ArgoCD
-  
-```shell
-kubectl -n argocd patch secret argocd-secret --patch-file=${secret_patch}
-```
 
+```yaml instacli
+Shell:
+  command: kubectl -n argocd patch secret argocd-secret --patch-file=${secret_patch}
+  show output: true
+```

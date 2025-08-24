@@ -17,16 +17,21 @@ Confirm: Are you sure you want to delete ArgoCD?
 
 Uninstall ArgoCD using the same manifest we installed it with
 
-```shell show_output=false
-kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+```yaml instacli
+Shell: |
+  kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
 
 ## Clean up ArgoCD namespaces
 
-```shell
-kubectl delete namespace argocd
+```yaml instacli
+Shell:
+  command: kubectl delete namespace argocd
+  show output: true
 ```
 
-```shell
-kubectl delete namespace guestbook
+```yaml instacli
+Shell:
+  command: kubectl delete namespace guestbook
+  show output: true
 ```
