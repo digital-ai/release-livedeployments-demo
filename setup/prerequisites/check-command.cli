@@ -1,12 +1,12 @@
-Script info:
-  description: Check if a specific command is available
-  input:
-    name:
-      description: Command name
-      enum:
-        - flux
-        - k3d
-        - kubectl
+Script info: Check if a specific command is available
+
+Input parameters:
+  name:
+    description: Command name
+    enum:
+      - flux
+      - k3d
+      - kubectl
 
 If:
   - item: ${input.name}
