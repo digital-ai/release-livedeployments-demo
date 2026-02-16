@@ -17,7 +17,7 @@ while true; do
         exit 1
     fi
 
-    response=$(curl -s -i -X POST -u admin:admin -H "Content-Type: application/json;charset=UTF-8" -d '{"tokenNote": "'$unique_id'", "globalPermissions": ["runner#registration"]}' $api_url)
+    response=$(curl -s -i -X POST -u admin:admin -H "Content-Type: application/json;charset=UTF-8" -d '{"tokenNote": "'$unique_id'", "globalPermissions": ["runner#edit"]}' $api_url)
 
     if [ $? -ne 0 ]; then
         echo "Fetching token failed - probably still initializing... retrying soon"
