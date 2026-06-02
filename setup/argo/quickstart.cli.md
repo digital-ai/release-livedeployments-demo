@@ -55,5 +55,5 @@ Run script: configure-live-deployment.cli.md
 
 ```yaml instacli
 On error:
-  Print: ArgoCD not installed
+  Print: "ArgoCD not installed:\n${error.message}"
 ```
