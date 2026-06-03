@@ -25,7 +25,7 @@ Use `kubectl` to install ArgoCD in the `argocd` namespace and create a service a
 
 ```yaml instacli
 Shell: |
-  kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
 
 > Waiting for ArgoCD server

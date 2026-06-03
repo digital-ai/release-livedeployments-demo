@@ -70,6 +70,12 @@ If you want to set up the live deployments manually, follow these steps:
 You can manually configure which versions of Release, Deploy and Release Runner to use by editing the `Dockerfile` files of the corresponding services in the
 `docker` directory. Simply change the `FROM` line to point to the desired version of the service.
 
+### xebialabs vs xebialabsunsupported images
+
+The `xebialabs` images are the official releases of the products, while the `xebialabsunsupported` images are built from the latest code in the main branch and
+may contain features and fixes that are not yet available in the official releases. The `xebialabsunsupported` images are intended for testing and development
+purposes and may not be as stable as the `xebialabs` images.
+
 ### Using Release and Deploy from zip
 
 You can use custom versions of Release and Deploy by providing arguments to the `up.sh` script. For example:
@@ -81,10 +87,12 @@ You can use custom versions of Release and Deploy by providing arguments to the 
 
 **Note**: don't forget to add license files to the `xl-deploy-from-zip` and `xl-release-from-zip` folders in the `docker` directory.
 Also, running from zip will most likely not include default plugins, which are only available in distribution packages.
-You can install plugins manually, keep in mind that setup container will fail and will need to be ran again which can be done with this command 
+You can install plugins manually, keep in mind that setup container will fail and will need to be ran again which can be done with this command
+
 ```
 docker container start release-livedeployments-demo-setup-1
 ```
+
 Or run `demo-scenario/setup.yaml` and `demo-scenario/setup-live-deployment.yaml` files manually using `xl apply` command.
 
 ## Running Release Runner in kubernetes

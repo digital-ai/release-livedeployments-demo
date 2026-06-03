@@ -8,5 +8,5 @@ Confirm: Set up K3d?
 Run script: install.cli.md
 
 On error:
-  Print: K3d cluster not installed
+  Print: "K3d cluster not installed:\n${error.message}"
 ```
