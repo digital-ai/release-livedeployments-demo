@@ -47,5 +47,6 @@ Error handling
 
 ```yaml instacli
 On error:
-  Print: "Flux CD not installed:\n${error.message}"
+  Error: |
+    "Flux CD not installed:\n${error.message}"
 ```
