@@ -8,20 +8,24 @@ Confirm: Set up FluxCD?
 
 ## Bootstrap Flux
 
+You can run setup in two modes: Automated or Manual.
+
 ```yaml instacli
-Prompt:
-  description: |
-    Do you want to use manual setup or automated?
-        * Automated will create a Flux environment with demo app without using a GitHub repository
-        * Manual will need GitHub repo and GitHub user data provided for bootstrapping
-  enum:
-    - Automated
-    - Manual
+Input parameters:
+  mode:
+    description: |
+      Do you want to use manual setup or automated?
+          * Automated will create a Flux environment with demo app without using a GitHub repository
+          * Manual will need GitHub repo and GitHub user data provided for bootstrapping
+    enum:
+      - Automated
+      - Manual
+    default: Automated
 ```
 
 ```yaml instacli
 If:
-  item: ${output}
+  item: ${input.mode}
   equals: Manual
   then:
     Run script: bootstrap.cli.md
