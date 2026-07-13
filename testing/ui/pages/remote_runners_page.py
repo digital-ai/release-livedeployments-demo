@@ -20,9 +20,9 @@ class RemoteRunnersPage(BasePage):
         expect(rows.first).to_be_visible()
 
         actual_count = rows.count()
-        assert actual_count >= minimum_count, (
-            f"Expected at least {minimum_count} runner row(s), found {actual_count}"
-        )
+        assert (
+            actual_count >= minimum_count
+        ), f"Expected at least {minimum_count} runner row(s), found {actual_count}"
         return self
 
     def expect_runner_visible(self, runner_name: str) -> "RemoteRunnersPage":

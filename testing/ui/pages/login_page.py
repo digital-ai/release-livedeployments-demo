@@ -3,6 +3,7 @@ from playwright.sync_api import Locator, expect
 from pages.base_page import BasePage
 
 
+# noinspection PyBroadException
 class LoginPage(BasePage):
     def login(self, username: str, password: str) -> None:
         self._wait_for_login_form_ready()
@@ -34,20 +35,20 @@ class LoginPage(BasePage):
     def _wait_for_network_idle(self) -> None:
         try:
             self.page.wait_for_load_state("networkidle", timeout=5000)
-        except Exception:  # noqa: BLE001
+        except Exception:
             pass
 
     def _reload(self) -> None:
         try:
             self.page.reload(wait_until="domcontentloaded")
-        except Exception:  # noqa: BLE001
+        except Exception:
             pass
 
     @staticmethod
     def _is_visible(locator: Locator, timeout: int = 5000) -> bool:
         try:
             return locator.is_visible(timeout=timeout)
-        except Exception:  # noqa: BLE001
+        except Exception:
             return False
 
     def _close_pendo_modal_window(self) -> None:
@@ -59,6 +60,6 @@ class LoginPage(BasePage):
     def expect_to_be_logged(self, username: str) -> None:
         tooltip = self.page.locator("top-toolbar .avatar-wrapper span.dot-tooltip")
         value = tooltip.get_attribute("aria-label")
-        assert value is not None and username in value, (
-            f"Expected logged-in user tooltip to contain '{username}', got '{value}'"
-        )
+        assert (
+            value is not None and username in value
+        ), f"Expected logged-in user tooltip to contain '{username}', got '{value}'"

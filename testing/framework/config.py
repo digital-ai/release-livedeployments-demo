@@ -9,7 +9,12 @@ BASIC_AUTH_PASSWORD: str = "admin"
 DEFAULT_TIMEOUT: int = 300
 POLL_INTERVAL: int = 5
 
-RUNNING_SERVICES: List[str] = ["deploy", "release", "remote-runner", "container-registry"]
+RUNNING_SERVICES: List[str] = [
+    "deploy",
+    "release",
+    "remote-runner",
+    "container-registry",
+]
 
 SETUP_SERVICE: str = "setup"
 

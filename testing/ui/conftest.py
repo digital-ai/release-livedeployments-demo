@@ -28,7 +28,9 @@ def admin_password() -> str:
 
 
 @pytest.fixture(scope="session")
-def authenticated_page(browser: Browser, admin_username: str, admin_password: str) -> Iterator[Page]:
+def authenticated_page(
+    browser: Browser, admin_username: str, admin_password: str
+) -> Iterator[Page]:
     """One shared, already-logged-in page reused by every test in the session."""
     release_url = os.environ.get("RELEASE_URL", "http://localhost:5516")
     context = browser.new_context(base_url=release_url)
@@ -42,7 +44,9 @@ def authenticated_page(browser: Browser, admin_username: str, admin_password: st
 
 
 @pytest.hookimpl(hookwrapper=True)
-def pytest_runtest_makereport(item: pytest.Item, call: pytest.CallInfo) -> Iterator[None]:
+def pytest_runtest_makereport(
+    item: pytest.Item, call: pytest.CallInfo
+) -> Iterator[None]:
     outcome = yield
     report = outcome.get_result()
     setattr(item, f"rep_{report.when}", report)
@@ -60,7 +64,9 @@ def _capture_authenticated_page_on_failure(
 
     yield
 
-    failed = bool(getattr(request.node, "rep_call", None) and request.node.rep_call.failed)
+    failed = bool(
+        getattr(request.node, "rep_call", None) and request.node.rep_call.failed
+    )
 
     screenshot_option = request.config.getoption("--screenshot")
     capture_screenshot = screenshot_option == "on" or (

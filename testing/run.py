@@ -11,6 +11,7 @@ from framework import config, docker_env
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TESTING_DIR = Path(__file__).resolve().parent
+PYTEST_COMMAND = [sys.executable, "-m", "pytest", "-m", "phase_one", "ui/tests"]
 
 
 class PhaseFailedError(Exception):
@@ -21,8 +22,12 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Run/validate the Release Live Deployments demo stack.",
     )
-    parser.add_argument("--release-zip", help="Path to a Release zip, passed through to up.sh")
-    parser.add_argument("--deploy-zip", help="Path to a Deploy zip, passed through to up.sh")
+    parser.add_argument(
+        "--release-zip", help="Path to a Release zip, passed through to up.sh"
+    )
+    parser.add_argument(
+        "--deploy-zip", help="Path to a Deploy zip, passed through to up.sh"
+    )
     parser.add_argument(
         "--timeout",
         type=int,
@@ -99,12 +104,12 @@ def _print_service_logs(service: str) -> None:
     print("--- end of logs ---\n", file=sys.stderr)
 
 
-def phase_ui_tests() -> None:
+def phase_one_ui_tests() -> None:
     env = os.environ.copy()
     env.setdefault("RELEASE_URL", config.RELEASE_URL)
     env.setdefault("DEPLOY_URL", config.DEPLOY_URL)
 
-    cmd = [sys.executable, "-m", "pytest", "ui/tests"]
+    cmd = PYTEST_COMMAND
     print(f"$ {' '.join(cmd)}", flush=True)
     process = subprocess.run(cmd, cwd=TESTING_DIR, env=env)
     if process.returncode != 0:
@@ -135,12 +140,12 @@ def main() -> None:
 
         log_banner("Phase: UI tests")
         if args.with_ui:
-            phase_ui_tests()
+            phase_one_ui_tests()
         else:
             print(
                 "Skipping UI tests (default). To run them manually later:\n"
                 f"  cd {TESTING_DIR}\n"
-                "  python -m pytest ui/tests\n"
+                f"  {' '.join(PYTEST_COMMAND)}\n"
             )
     except PhaseFailedError as exc:
         print(f"\n{exc}", file=sys.stderr)
@@ -161,7 +166,9 @@ def main() -> None:
         print("All requested phases completed successfully.")
     else:
         log_banner("Done (with failures)")
-        print("One or more phases failed. See output above for details.", file=sys.stderr)
+        print(
+            "One or more phases failed. See output above for details.", file=sys.stderr
+        )
 
     sys.exit(exit_code)
 
