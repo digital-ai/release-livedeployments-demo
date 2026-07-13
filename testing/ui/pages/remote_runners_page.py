@@ -6,6 +6,7 @@ from pages.base_page import BasePage
 class RemoteRunnersPage(BasePage):
     def open(self) -> "RemoteRunnersPage":
         self.page.goto("./#/runners")
+        expect(self.page.locator(".remote-runners-table")).to_be_visible()
         return self
 
     def expect_table_page_to_be_visible(self) -> "RemoteRunnersPage":

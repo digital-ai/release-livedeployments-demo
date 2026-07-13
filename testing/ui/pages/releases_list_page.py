@@ -6,6 +6,8 @@ from pages.base_page import BasePage
 class ReleasesListPage(BasePage):
     def open(self) -> "ReleasesListPage":
         self.page.goto("./#/releases")
+        expect(self.page.locator(".release-list")).to_be_visible()
+        self.wait_for_releases_loaded()
         return self
 
     def expect_release_displayed(self, release_title: str) -> "ReleasesListPage":
@@ -28,4 +30,8 @@ class ReleasesListPage(BasePage):
         clear_all_button = self.page.get_by_test_id("clear-all-btn")
         clear_all_button.click()
 
+        return self
+
+    def wait_for_releases_loaded(self) -> "ReleasesListPage":
+        expect(self.page.locator(".releases-list-loaded:visible").first).to_be_visible()
         return self
