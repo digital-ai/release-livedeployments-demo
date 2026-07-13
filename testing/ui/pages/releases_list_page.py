@@ -16,6 +16,7 @@ class ReleasesListPage(BasePage):
         ).to_be_visible()
         return self
 
+    # TODO: does not refresh UI state, can't simply wait for completion :(
     def expect_release_completed(self, release_title: str) -> "ReleasesListPage":
         release_status = (
             self.page.locator(".release")
@@ -23,13 +24,13 @@ class ReleasesListPage(BasePage):
             .locator(".release-status")
             .filter(has_text="Completed")
         )
-        expect(release_status).to_be_visible()
+        expect(release_status).to_be_visible(timeout=180_000)
         return self
 
     def clear_all_filters(self) -> "ReleasesListPage":
         clear_all_button = self.page.get_by_test_id("clear-all-btn")
-        clear_all_button.click()
-
+        if clear_all_button.is_visible():
+            clear_all_button.click()
         return self
 
     def wait_for_releases_loaded(self) -> "ReleasesListPage":

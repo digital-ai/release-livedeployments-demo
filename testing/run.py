@@ -11,7 +11,22 @@ from framework import config, docker_env
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TESTING_DIR = Path(__file__).resolve().parent
-PYTEST_COMMAND = [sys.executable, "-m", "pytest", "-m", "phase_one", "ui/tests"]
+PYTEST_PHASE_ONE_COMMAND = [
+    sys.executable,
+    "-m",
+    "pytest",
+    "-m",
+    "phase_one",
+    "ui/tests",
+]
+PYTEST_PHASE_TWO_COMMAND = [
+    sys.executable,
+    "-m",
+    "pytest",
+    "-m",
+    "phase_two",
+    "ui/tests",
+]
 
 
 class PhaseFailedError(Exception):
@@ -45,6 +60,11 @@ def parse_args() -> argparse.Namespace:
         help="Tear down the environment via down.sh at the end.",
     )
     parser.add_argument(
+        "--cli-setup",
+        action="store_true",
+        help="Enables setup and testing of `./cli setup` script.",
+    )
+    parser.add_argument(
         "--skip-up",
         action="store_true",
         help="Skip calling up.sh (useful if the stack is already running).",
@@ -65,8 +85,6 @@ def run_streaming(cmd: List[str], cwd: Optional[Path] = None) -> int:
 
 
 def phase_up(release_zip: Optional[str], deploy_zip: Optional[str]) -> None:
-    log_banner("Phase: Startup (up.sh)")
-
     cmd = ["bash", "./up.sh"]
     if release_zip:
         cmd += ["--release-zip", release_zip]
@@ -104,21 +122,43 @@ def _print_service_logs(service: str) -> None:
     print("--- end of logs ---\n", file=sys.stderr)
 
 
-def phase_one_ui_tests() -> None:
+def __ui_tests(test_command: List[str]) -> None:
     env = os.environ.copy()
     env.setdefault("RELEASE_URL", config.RELEASE_URL)
     env.setdefault("DEPLOY_URL", config.DEPLOY_URL)
 
-    cmd = PYTEST_COMMAND
+    cmd = test_command
     print(f"$ {' '.join(cmd)}", flush=True)
     process = subprocess.run(cmd, cwd=TESTING_DIR, env=env)
     if process.returncode != 0:
         raise PhaseFailedError(f"UI tests failed with exit code {process.returncode}.")
 
 
-def phase_down() -> None:
-    log_banner("Phase: Teardown (down.sh)")
+def phase_one_ui_tests() -> None:
+    __ui_tests(PYTEST_PHASE_ONE_COMMAND)
 
+
+def phase_two_ui_tests() -> None:
+    __ui_tests(PYTEST_PHASE_TWO_COMMAND)
+
+
+def phase_cli_setup() -> None:
+    cmd = ["bash", "./cli", "-q", "setup", "quickstart"]
+
+    exit_code = run_streaming(cmd, cwd=REPO_ROOT)
+    if exit_code != 0:
+        raise PhaseFailedError(f"cli setup failed with exit code {exit_code}.")
+
+
+def phase_cli_delete() -> None:
+    cmd = ["bash", "./cli", "-q", "setup", "k3d", "delete"]
+
+    exit_code = run_streaming(cmd, cwd=REPO_ROOT)
+    if exit_code != 0:
+        raise PhaseFailedError(f"cli setup failed with exit code {exit_code}.")
+
+
+def phase_down() -> None:
     exit_code = run_streaming(["bash", "./down.sh"], cwd=REPO_ROOT)
     if exit_code != 0:
         raise PhaseFailedError(f"down.sh failed with exit code {exit_code}.")
@@ -129,8 +169,8 @@ def main() -> None:
     exit_code = 0
 
     try:
+        log_banner("Phase: Startup (up.sh)")
         if args.skip_up:
-            log_banner("Phase: Startup (up.sh)")
             print("--skip-up given, skipping stack startup.")
         else:
             phase_up(args.release_zip, args.deploy_zip)
@@ -138,27 +178,46 @@ def main() -> None:
         log_banner("Phase: Readiness checks")
         phase_readiness(args.timeout)
 
-        log_banner("Phase: UI tests")
+        log_banner("Phase: UI tests 1")
         if args.with_ui:
             phase_one_ui_tests()
         else:
             print(
                 "Skipping UI tests (default). To run them manually later:\n"
                 f"  cd {TESTING_DIR}\n"
-                f"  {' '.join(PYTEST_COMMAND)}\n"
+                f"  {' '.join(PYTEST_PHASE_ONE_COMMAND)}\n"
             )
+
+        log_banner("Phase: cli-setup cluster setup")
+        if args.cli_setup:
+            phase_cli_setup()
+        else:
+            print("--cli-setup not given, skipping cluster setup.")
+
+        log_banner("Phase: UI tests 2")
+        if args.cli_setup and args.with_ui:
+            phase_two_ui_tests()
+        else:
+            print(
+                "Skipping UI tests (default). To run them manually later:\n"
+                f"  cd {TESTING_DIR}\n"
+                f"  {' '.join(PYTEST_PHASE_TWO_COMMAND)}\n"
+            )
+
     except PhaseFailedError as exc:
         print(f"\n{exc}", file=sys.stderr)
         exit_code = 1
     finally:
+        log_banner("Phase: Teardown")
         if args.down:
             try:
+                if args.cli_setup:
+                    phase_cli_delete()
                 phase_down()
             except PhaseFailedError as exc:
                 print(f"\n{exc}", file=sys.stderr)
                 exit_code = 1
         else:
-            log_banner("Phase: Teardown (down.sh)")
             print("--down not given, leaving stack running.")
 
     if exit_code == 0:

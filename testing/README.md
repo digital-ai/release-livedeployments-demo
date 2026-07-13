@@ -32,6 +32,9 @@ python testing/run.py --with-ui
 # Tear the stack down again once done.
 python testing/run.py --down
 
+# Also run extra cluster setup of `./cli setup`.
+python testing/run.py --cli-setup
+
 # Stack already running? Skip straight to readiness checks / UI tests.
 python testing/run.py --skip-up --with-ui
 

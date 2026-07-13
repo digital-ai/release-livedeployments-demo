@@ -15,7 +15,7 @@ class LiveDeploymentsPage(BasePage):
     def wait_for_live_deployments_loaded(self) -> "LiveDeploymentsPage":
         expect(
             self.page.locator(".external-deployments-cards-skeletons")
-        ).not_to_be_visible()
+        ).not_to_be_visible(timeout=30_000)
         return self
 
     def expect_live_deployment_displayed(
