@@ -1,5 +1,6 @@
 from playwright.sync_api import expect
 
+from framework.test_util import is_visible_with_reload
 from pages.base_page import BasePage
 
 
@@ -21,11 +22,15 @@ class LiveDeploymentsPage(BasePage):
     def expect_live_deployment_displayed(
         self, deployment_name: str
     ) -> "LiveDeploymentsPage":
-        expect(
+        deployment_card = (
             self.page.locator(".external-deployments-card-cell")
             .filter(has_text=deployment_name)
             .first
-        ).to_be_visible()
+        )
+        # some deployments take a while to show up
+        is_visible_with_reload(
+            page=self.page, locator=deployment_card, timeout=120, interval=20
+        )
         return self
 
     def expect_live_deployment_count(
@@ -33,6 +38,10 @@ class LiveDeploymentsPage(BasePage):
     ) -> "LiveDeploymentsPage":
         deployments = self.page.locator(".external-deployments-card-cell").filter(
             has_text=deployment_name
+        )
+        # some deployments take a while to show up
+        is_visible_with_reload(
+            page=self.page, locator=deployments, timeout=120, interval=20
         )
         expect(deployments).to_have_count(count)
         return self

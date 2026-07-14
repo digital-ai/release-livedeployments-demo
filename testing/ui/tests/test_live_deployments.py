@@ -6,7 +6,7 @@ from pages.live_deployments_page import LiveDeploymentsPage
 
 
 @pytest.mark.phase_one
-def test_deploy_releases_created(authenticated_page: Page) -> None:
+def test_deploy_deployments_created(authenticated_page: Page) -> None:
     folder_page = FoldersPage(authenticated_page)
     folder_page.open()
     folder_id = folder_page.get_folder_id("Application Demo")
@@ -19,7 +19,7 @@ def test_deploy_releases_created(authenticated_page: Page) -> None:
 
 
 @pytest.mark.phase_two
-def test_argocd_releases_created(authenticated_page: Page) -> None:
+def test_argocd_deployment_created(authenticated_page: Page) -> None:
     folder_page = FoldersPage(authenticated_page)
     folder_page.open()
     folder_id = folder_page.get_folder_id("Application Demo")
@@ -32,7 +32,7 @@ def test_argocd_releases_created(authenticated_page: Page) -> None:
 
 
 @pytest.mark.phase_two
-def test_fluxcd_releases_created(authenticated_page: Page) -> None:
+def test_fluxcd_deployment_created(authenticated_page: Page) -> None:
     folder_page = FoldersPage(authenticated_page)
     folder_page.open()
     folder_id = folder_page.get_folder_id("Application Demo")

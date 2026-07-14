@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import List, Optional
 
 from framework import config, docker_env
+from framework.kubernetes_util import wait_for_app_condition
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TESTING_DIR = Path(__file__).resolve().parent
@@ -117,7 +118,7 @@ def _print_service_logs(service: str) -> None:
     try:
         logs = docker_env.get_service_logs(REPO_ROOT, service, tail=50)
         print(logs, file=sys.stderr)
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         print(f"(failed to fetch {service} logs: {exc})", file=sys.stderr)
     print("--- end of logs ---\n", file=sys.stderr)
 
@@ -148,6 +149,20 @@ def phase_cli_setup() -> None:
     exit_code = run_streaming(cmd, cwd=REPO_ROOT)
     if exit_code != 0:
         raise PhaseFailedError(f"cli setup failed with exit code {exit_code}.")
+
+
+# cli setup does not wait for apps to become ready, for testing we need to wait for apps so that deployments are created
+def wait_for_apps_available() -> None:
+    argo_result = wait_for_app_condition(
+        app_name="deployment/kustomize-guestbook-ui", namespace="guestbook"
+    )
+    flux_result = wait_for_app_condition(
+        app_name="deployment/podinfo", namespace="podinfo"
+    )
+    if not argo_result or not flux_result:
+        raise PhaseFailedError(
+            f"demo apps are not available in cluster. ArgoCD: {argo_result}, FluxCD: {flux_result}"
+        )
 
 
 def phase_cli_delete() -> None:
@@ -191,6 +206,8 @@ def main() -> None:
         log_banner("Phase: cli-setup cluster setup")
         if args.cli_setup:
             phase_cli_setup()
+            log_banner("Waiting for apps to become available")
+            wait_for_apps_available()
         else:
             print("--cli-setup not given, skipping cluster setup.")
 

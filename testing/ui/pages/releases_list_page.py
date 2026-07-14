@@ -1,5 +1,6 @@
 from playwright.sync_api import expect
 
+from framework.test_util import is_visible_with_reload
 from pages.base_page import BasePage
 
 
@@ -16,7 +17,6 @@ class ReleasesListPage(BasePage):
         ).to_be_visible()
         return self
 
-    # TODO: does not refresh UI state, can't simply wait for completion :(
     def expect_release_completed(self, release_title: str) -> "ReleasesListPage":
         release_status = (
             self.page.locator(".release")
@@ -24,7 +24,8 @@ class ReleasesListPage(BasePage):
             .locator(".release-status")
             .filter(has_text="Completed")
         )
-        expect(release_status).to_be_visible(timeout=180_000)
+        # status does not update automatically without refresh or reload
+        is_visible_with_reload(page=self.page, locator=release_status, timeout=180)
         return self
 
     def clear_all_filters(self) -> "ReleasesListPage":

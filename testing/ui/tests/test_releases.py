@@ -3,7 +3,7 @@ from playwright.sync_api import Page
 
 from pages.releases_list_page import ReleasesListPage
 
-# Run release tests first as they make sure that everything was created for other tests
+# order(1) - Run release tests first as they make sure that everything was created for other tests
 
 
 @pytest.mark.phase_one
