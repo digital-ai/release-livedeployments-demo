@@ -9,6 +9,8 @@ It reuses the repo's existing `up.sh` / `down.sh` scripts (via subprocess)
 rather than reimplementing them, so those remain the canonical way to
 start/stop the stack.
 
+It also automatically installs and test the `./cli setup`
+
 ## Setup
 
 From the repo root:
@@ -19,6 +21,15 @@ source .venv/bin/activate
 pip install -r testing/requirements.txt
 playwright install --with-deps
 ```
+
+### for cluster setup
+
+Additionally, for cluster to work you will need to install the following:
+
+- k3d
+- kubectl
+- docker with compose
+- flux
 
 ## Usage
 
