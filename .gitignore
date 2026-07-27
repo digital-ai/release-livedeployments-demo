@@ -54,3 +54,7 @@ xl-release-license.lic
 xebialabs
 digitalai
 ziprepo
+
+.venv/
+.opencode/
+.claude/
