@@ -9,7 +9,6 @@ from typing import List, Optional
 
 from framework import config, docker_env
 from framework.kubernetes_util import (
-    force_fluxcd_reconcile,
     get_cluster_diagnostics,
     wait_for_app_ready,
 )
