@@ -1,4 +1,4 @@
-name: Scheduled E2E Tests
+name: Run tests
 
 # Runs the full demo-stack + UI test suite roughly every two weeks
 # (1st and 15th of the month), plus on-demand via workflow_dispatch.
@@ -10,7 +10,7 @@ on:
   # default branch (schedule/workflow_dispatch only work from the default
   # branch). Remove this trigger once validated.
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 concurrency:
   group: run-tests-${{ github.event_name == 'pull_request' && github.ref || 'scheduled' }}
@@ -67,7 +67,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: playwright-failure-screenshots
-          path: testing/ui/test-results/**/*.png
+          path: testing/test-results/**/*.png
           if-no-files-found: ignore
           retention-days: 14
 
