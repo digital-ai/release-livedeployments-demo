@@ -202,11 +202,10 @@ def dump_relevant_container_logs(output_dir: Path) -> List[Path]:
         text=True,
         check=False,
     )
-    relevant_names = [
-        name
-        for name in names_result.stdout.splitlines()
-        if name and not name.startswith("k3d-")
-    ]
+    relevant_names = []
+    for name in names_result.stdout.splitlines():
+        if name and not name.startswith("k3d-"):
+            relevant_names.append(name)
 
     written_files: List[Path] = []
     for name in relevant_names:
