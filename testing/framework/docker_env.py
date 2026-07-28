@@ -129,6 +129,42 @@ def check_http_ready(url: str, timeout: int = config.HTTP_TIMEOUT) -> bool:
         return False
 
 
+def get_all_container_statuses(repo_root: Path) -> str:
+    sections: List[str] = []
+
+    compose_ps = subprocess.run(
+        [
+            "docker",
+            "compose",
+            "-f",
+            _compose_file(repo_root),
+            "ps",
+            "-a",
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+        env=_compose_env(),
+    )
+    sections.append("$ docker compose ps -a\n" + compose_ps.stdout + compose_ps.stderr)
+
+    all_containers = subprocess.run(
+        [
+            "docker",
+            "ps",
+            "-a",
+            "--format",
+            "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}",
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    sections.append("$ docker ps -a\n" + all_containers.stdout + all_containers.stderr)
+
+    return "\n".join(sections)
+
+
 def get_service_logs(repo_root: Path, service: str, tail: int = 50) -> str:
     result = subprocess.run(
         [
