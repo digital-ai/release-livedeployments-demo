@@ -24,6 +24,7 @@ Shell: |
 
 ```yaml instacli
 Shell: |
+  sleep 15
   kubectl wait --for=condition=Ready pod -l k8s-app=metrics-server -n kube-system --timeout=300s
 ```
 
