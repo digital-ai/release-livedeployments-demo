@@ -185,6 +185,44 @@ def get_service_logs(repo_root: Path, service: str, tail: int = 50) -> str:
     return result.stdout + result.stderr
 
 
+def dump_relevant_container_logs(output_dir: Path) -> List[Path]:
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    names_result = subprocess.run(
+        [
+            "docker",
+            "ps",
+            "-a",
+            "--filter",
+            "network=demo-network",
+            "--format",
+            "{{.Names}}",
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    relevant_names = [
+        name
+        for name in names_result.stdout.splitlines()
+        if name and not name.startswith("k3d-")
+    ]
+
+    written_files: List[Path] = []
+    for name in relevant_names:
+        logs_result = subprocess.run(
+            ["docker", "logs", "--timestamps", name],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        log_file = output_dir / f"{name}.log"
+        log_file.write_text(logs_result.stdout + logs_result.stderr)
+        written_files.append(log_file)
+
+    return written_files
+
+
 def wait_for_stack_ready(
     repo_root: Path,
     timeout: int = config.DEFAULT_TIMEOUT,

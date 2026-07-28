@@ -62,12 +62,14 @@ jobs:
         id: run_tests
         run: python testing/run.py --with-ui --cli-setup --down
 
-      - name: Upload failure screenshots
+      - name: Upload failure artifacts
         if: failure()
         uses: actions/upload-artifact@v7
         with:
-          name: playwright-failure-screenshots
-          path: testing/test-results/**/*.png
+          name: failure-artifacts
+          path: |
+            testing/test-results/**/*.png
+            testing/test-results/docker-logs/**
           if-no-files-found: ignore
           retention-days: 14
 
