@@ -1,7 +1,10 @@
+import os
+
 import pytest
 from playwright.sync_api import Page
 
 from pages.releases_list_page import ReleasesListPage
+
 
 # order(1) - Run release tests first as they make sure that everything was created for other tests
 
@@ -37,3 +40,6 @@ def test_fluxcd_releases_created(authenticated_page: Page) -> None:
     releases_page.clear_all_filters()
     releases_page.expect_release_displayed("Add FluxCD Live Deployments")
     releases_page.expect_release_completed("Add FluxCD Live Deployments")
+    output_path = os.path.join("test-results", "test_fluxcd_releases_created")
+    os.makedirs(output_path, exist_ok=True)
+    authenticated_page.screenshot(path=os.path.join(output_path, "test-failed.png"))
