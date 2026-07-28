@@ -150,8 +150,7 @@ def _print_cluster_diagnostics() -> None:
 
 def _dump_docker_logs() -> None:
     print(
-        f"\n--- Dumping relevant docker container logs to {DOCKER_LOGS_DIR} ---",
-        file=sys.stderr,
+        f"\n--- Dumping docker container logs to {DOCKER_LOGS_DIR} ---", file=sys.stderr
     )
     try:
         written_files = docker_env.dump_relevant_container_logs(DOCKER_LOGS_DIR)

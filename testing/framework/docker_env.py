@@ -189,24 +189,23 @@ def dump_relevant_container_logs(output_dir: Path) -> List[Path]:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     names_result = subprocess.run(
-        [
-            "docker",
-            "ps",
-            "-a",
-            "--filter",
-            "network=demo-network",
-            "--format",
-            "{{.Names}}",
-        ],
+        ["docker", "ps", "-a", "--format", "{{.Names}}"],
         capture_output=True,
         text=True,
         check=False,
     )
-    relevant_names = [
-        name
-        for name in names_result.stdout.splitlines()
-        if name and not name.startswith("k3d-")
-    ]
+    relevant_names = []
+    for name in names_result.stdout.splitlines():
+        if not name or name.startswith("k3d-"):
+            continue
+        networks_result = subprocess.run(
+            ["docker", "inspect", "-f", "{{json .NetworkSettings.Networks}}", name],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if "demo-network" in networks_result.stdout:
+            relevant_names.append(name)
 
     written_files: List[Path] = []
     for name in relevant_names:
