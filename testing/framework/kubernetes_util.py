@@ -37,24 +37,3 @@ def wait_for_app_ready(
         check=False,
     )
     return result.returncode == 0
-
-
-def force_fluxcd_reconcile(
-    kustomization: str = "podinfo", namespace: str = "podinfo", timeout: int = 60
-) -> bool:
-    result = subprocess.run(
-        [
-            "flux",
-            "reconcile",
-            "kustomization",
-            kustomization,
-            "-n",
-            namespace,
-            "--with-source",
-            f"--timeout={timeout}s",
-        ],
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-    return result.returncode == 0

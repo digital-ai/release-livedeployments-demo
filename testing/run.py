@@ -216,13 +216,6 @@ def wait_for_apps_ready() -> None:
         )
 
 
-def phase_force_fluxcd_reconcile() -> None:
-    if not force_fluxcd_reconcile(kustomization="podinfo", namespace="podinfo"):
-        _print_cluster_diagnostics()
-        _dump_docker_logs()
-        raise PhaseFailedError("Failed to force FluxCD reconcile for 'podinfo'.")
-
-
 def phase_cli_delete() -> None:
     cmd = ["bash", "./cli", "-q", "setup", "k3d", "delete"]
 
@@ -266,8 +259,6 @@ def main() -> None:
             phase_cli_setup()
             log_banner("Waiting for apps to become ready")
             wait_for_apps_ready()
-            log_banner("Forcing FluxCD reconcile")
-            phase_force_fluxcd_reconcile()
         else:
             print("--cli-setup not given, skipping cluster setup.")
 
