@@ -6,10 +6,15 @@ on:
   schedule:
     - cron: "0 3 1,15 * *"
   workflow_dispatch: { }
+  # TEMPORARY: lets us validate the workflow on this PR before merging to the
+  # default branch (schedule/workflow_dispatch only work from the default
+  # branch). Remove this trigger once validated.
+  pull_request:
+    branches: [main]
 
 concurrency:
-  group: run-tests
-  cancel-in-progress: false
+  group: run-tests-${{ github.event_name == 'pull_request' && github.ref || 'scheduled' }}
+  cancel-in-progress: true
 
 jobs:
   e2e:
