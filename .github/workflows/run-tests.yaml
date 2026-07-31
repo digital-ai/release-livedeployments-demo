@@ -1,0 +1,84 @@
+name: Run tests
+
+# Runs the full demo-stack + UI test suite roughly every two weeks
+# (1st and 15th of the month), plus on-demand via workflow_dispatch.
+on:
+  schedule:
+    - cron: "0 3 1,15 * *"
+  workflow_dispatch: { }
+
+concurrency:
+  group: run-tests-${{ github.event_name == 'pull_request' && github.ref || 'scheduled' }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Java (required by ./cli / Instacli)
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: testing/requirements.txt
+
+      - name: Set up Docker Buildx (ensures docker compose v2 plugin is ready)
+        uses: docker/setup-buildx-action@v4
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v5
+        with:
+          version: latest
+
+      - name: Install k3d
+        run: curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+
+      - name: Install FluxCD CLI
+        uses: fluxcd/flux2/action@v2.5.1
+        with:
+          version: '2.5.1'
+
+      - name: Install Python test dependencies
+        run: pip install -r testing/requirements.txt
+
+      - name: Install Playwright browsers
+        run: python -m playwright install --with-deps
+
+      - name: Run E2E test suite
+        id: run_tests
+        run: python testing/run.py --with-ui --cli-setup --down
+
+      - name: Upload failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: failure-artifacts
+          path: |
+            testing/test-results/**/*.png
+            testing/test-results/docker-logs/**
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Send Slack notification
+        if: always() && env.SLACK_BOT_TOKEN != '' && env.SLACK_CHANNEL_ID != ''
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+        uses: slackapi/slack-github-action@v4.0.0
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_CHANNEL_ID }}
+            text: "${{ job.status == 'success' && ':white_check_mark:' || ':x:' }} Live Deployments Demo Repo tests *${{ job.status }}* (run <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|#${{ github.run_number }}>)"

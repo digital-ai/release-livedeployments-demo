@@ -129,6 +129,42 @@ def check_http_ready(url: str, timeout: int = config.HTTP_TIMEOUT) -> bool:
         return False
 
 
+def get_all_container_statuses(repo_root: Path) -> str:
+    sections: List[str] = []
+
+    compose_ps = subprocess.run(
+        [
+            "docker",
+            "compose",
+            "-f",
+            _compose_file(repo_root),
+            "ps",
+            "-a",
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+        env=_compose_env(),
+    )
+    sections.append("$ docker compose ps -a\n" + compose_ps.stdout + compose_ps.stderr)
+
+    all_containers = subprocess.run(
+        [
+            "docker",
+            "ps",
+            "-a",
+            "--format",
+            "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}",
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    sections.append("$ docker ps -a\n" + all_containers.stdout + all_containers.stderr)
+
+    return "\n".join(sections)
+
+
 def get_service_logs(repo_root: Path, service: str, tail: int = 50) -> str:
     result = subprocess.run(
         [
@@ -147,6 +183,43 @@ def get_service_logs(repo_root: Path, service: str, tail: int = 50) -> str:
         env=_compose_env(),
     )
     return result.stdout + result.stderr
+
+
+def dump_relevant_container_logs(output_dir: Path) -> List[Path]:
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    names_result = subprocess.run(
+        [
+            "docker",
+            "ps",
+            "-a",
+            "--filter",
+            "network=demo-network",
+            "--format",
+            "{{.Names}}",
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    relevant_names = []
+    for name in names_result.stdout.splitlines():
+        if name and not name.startswith("k3d-"):
+            relevant_names.append(name)
+
+    written_files: List[Path] = []
+    for name in relevant_names:
+        logs_result = subprocess.run(
+            ["docker", "logs", "--timestamps", name],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        log_file = output_dir / f"{name}.log"
+        log_file.write_text(logs_result.stdout + logs_result.stderr)
+        written_files.append(log_file)
+
+    return written_files
 
 
 def wait_for_stack_ready(

@@ -2,7 +2,7 @@ import os
 from typing import Iterator
 
 import pytest
-from playwright.sync_api import Browser, Page
+from playwright.sync_api import Browser, Page, ViewportSize
 
 from pages.login_page import LoginPage
 
@@ -33,7 +33,9 @@ def authenticated_page(
 ) -> Iterator[Page]:
     """One shared, already-logged-in page reused by every test in the session."""
     release_url = os.environ.get("RELEASE_URL", "http://localhost:5516")
-    context = browser.new_context(base_url=release_url)
+    context = browser.new_context(
+        base_url=release_url, viewport=ViewportSize(width=1920, height=1080)
+    )
     page = context.new_page()
 
     LoginPage(page).login(admin_username, admin_password)

@@ -8,10 +8,14 @@ from pathlib import Path
 from typing import List, Optional
 
 from framework import config, docker_env
-from framework.kubernetes_util import wait_for_app_condition
+from framework.kubernetes_util import (
+    get_cluster_diagnostics,
+    wait_for_app_ready,
+)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TESTING_DIR = Path(__file__).resolve().parent
+DOCKER_LOGS_DIR = TESTING_DIR / "test-results" / "docker-logs"
 PYTEST_PHASE_ONE_COMMAND = [
     sys.executable,
     "-m",
@@ -107,9 +111,11 @@ def phase_readiness(timeout: int) -> None:
         print("Stack is ready: all services running and Release/Deploy responding.")
     except docker_env.ServiceFailedError as exc:
         _print_service_logs(exc.service)
+        _dump_docker_logs()
         raise PhaseFailedError(str(exc)) from exc
     except TimeoutError as exc:
         _print_service_logs(config.SETUP_SERVICE)
+        _dump_docker_logs()
         raise PhaseFailedError(f"Timed out waiting for stack readiness: {exc}") from exc
 
 
@@ -121,6 +127,38 @@ def _print_service_logs(service: str) -> None:
     except Exception as exc:
         print(f"(failed to fetch {service} logs: {exc})", file=sys.stderr)
     print("--- end of logs ---\n", file=sys.stderr)
+
+
+def _print_docker_diagnostics() -> None:
+    print("\n--- Docker container statuses ---", file=sys.stderr)
+    try:
+        print(docker_env.get_all_container_statuses(REPO_ROOT), file=sys.stderr)
+    except Exception as exc:
+        print(f"(failed to fetch docker container statuses: {exc})", file=sys.stderr)
+    print("--- end of docker container statuses ---\n", file=sys.stderr)
+
+
+def _print_cluster_diagnostics() -> None:
+    print("\n--- Kubernetes cluster state ---", file=sys.stderr)
+    try:
+        print(get_cluster_diagnostics(), file=sys.stderr)
+    except Exception as exc:
+        print(f"(failed to fetch cluster diagnostics: {exc})", file=sys.stderr)
+    print("--- end of Kubernetes cluster state ---\n", file=sys.stderr)
+
+
+def _dump_docker_logs() -> None:
+    print(
+        f"\n--- Dumping relevant docker container logs to {DOCKER_LOGS_DIR} ---",
+        file=sys.stderr,
+    )
+    try:
+        written_files = docker_env.dump_relevant_container_logs(DOCKER_LOGS_DIR)
+        for log_file in written_files:
+            print(f"  wrote {log_file}", file=sys.stderr)
+    except Exception as exc:
+        print(f"(failed to dump docker container logs: {exc})", file=sys.stderr)
+    print("--- end of docker container logs dump ---\n", file=sys.stderr)
 
 
 def __ui_tests(test_command: List[str]) -> None:
@@ -136,11 +174,22 @@ def __ui_tests(test_command: List[str]) -> None:
 
 
 def phase_one_ui_tests() -> None:
-    __ui_tests(PYTEST_PHASE_ONE_COMMAND)
+    try:
+        __ui_tests(PYTEST_PHASE_ONE_COMMAND)
+    except PhaseFailedError:
+        _print_docker_diagnostics()
+        _dump_docker_logs()
+        raise
 
 
 def phase_two_ui_tests() -> None:
-    __ui_tests(PYTEST_PHASE_TWO_COMMAND)
+    try:
+        __ui_tests(PYTEST_PHASE_TWO_COMMAND)
+    except PhaseFailedError:
+        _print_docker_diagnostics()
+        _print_cluster_diagnostics()
+        _dump_docker_logs()
+        raise
 
 
 def phase_cli_setup() -> None:
@@ -148,18 +197,20 @@ def phase_cli_setup() -> None:
 
     exit_code = run_streaming(cmd, cwd=REPO_ROOT)
     if exit_code != 0:
+        _print_cluster_diagnostics()
+        _dump_docker_logs()
         raise PhaseFailedError(f"cli setup failed with exit code {exit_code}.")
 
 
 # cli setup does not wait for apps to become ready, for testing we need to wait for apps so that deployments are created
-def wait_for_apps_available() -> None:
-    argo_result = wait_for_app_condition(
-        app_name="deployment/kustomize-guestbook-ui", namespace="guestbook"
+def wait_for_apps_ready() -> None:
+    argo_result = wait_for_app_ready(
+        resource="deployment/kustomize-guestbook-ui", namespace="guestbook"
     )
-    flux_result = wait_for_app_condition(
-        app_name="deployment/podinfo", namespace="podinfo"
-    )
+    flux_result = wait_for_app_ready(resource="deployment/podinfo", namespace="podinfo")
     if not argo_result or not flux_result:
+        _print_cluster_diagnostics()
+        _dump_docker_logs()
         raise PhaseFailedError(
             f"demo apps are not available in cluster. ArgoCD: {argo_result}, FluxCD: {flux_result}"
         )
@@ -206,8 +257,8 @@ def main() -> None:
         log_banner("Phase: cli-setup cluster setup")
         if args.cli_setup:
             phase_cli_setup()
-            log_banner("Waiting for apps to become available")
-            wait_for_apps_available()
+            log_banner("Waiting for apps to become ready")
+            wait_for_apps_ready()
         else:
             print("--cli-setup not given, skipping cluster setup.")
 
